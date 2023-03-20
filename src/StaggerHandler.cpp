@@ -1,6 +1,7 @@
 #include "StaggerHandler.h"
 #include "PoiseDamageCalculator.h"
 #include "PoiseHealthHandler.h"
+#include "PoiseRegenHandler.h"
 
 namespace MaxsuPoise
 {
@@ -20,7 +21,9 @@ namespace MaxsuPoise
 		auto aggressor = a_hitData->aggressor ? a_hitData->aggressor.get().get() : nullptr;
 
 		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(target);
-		if (currentPoiseHealth <= 0.f && target->IsStaggering())
+		auto regenDelayTimer = PoiseRegenHandler::GetPoiseRegenDelayTimer(target);
+
+		if (currentPoiseHealth <= 0.f && (target->IsStaggering() || regenDelayTimer))
 			return;
 
 		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(target);
@@ -33,15 +36,18 @@ namespace MaxsuPoise
 		} else {
 			auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
 			auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
-			if (staggerLevel > immuneLevel) {
-				TryStagger(target, std::max(0.1f, 0.25f * (staggerLevel - 1) + 0.01f), aggressor);
+			if (staggerLevel && staggerLevel > immuneLevel) {
+				TryStagger(target, 0.25f * (staggerLevel) + 0.01f, aggressor);
 			}
 		}
+
+		if (target->IsStaggering())
+			PoiseRegenHandler::SetPoiseRegenDelayTimer(target, PoiseRegenHandler::GetMaxPoiseRegenDelayTime());
 	}
 
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
 	{
-		float damageTHLD_Arr[StaggerLevel::kLargest] = { 0.1f, 0.25f, 0.5f, 1.0f };
+		float damageTHLD_Arr[StaggerLevel::kLargest] = { 0.15f, 0.25f, 0.5f, 1.0f };
 		for (std::uint32_t i = StaggerLevel::kNone; i < StaggerLevel::kLargest; i++) {
 			if (a_DamagePercent < damageTHLD_Arr[i])
 				return static_cast<StaggerLevel>(i);
