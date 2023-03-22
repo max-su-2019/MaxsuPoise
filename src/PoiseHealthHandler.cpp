@@ -1,4 +1,5 @@
 #include "PoiseHealthHandler.h"
+#include "Utils.h"
 
 namespace MaxsuPoise
 {
@@ -30,7 +31,7 @@ namespace MaxsuPoise
 
 	float PoiseHealthHandler::GetBasePoiseHealth()
 	{
-		return 100.0f;
+		return GetGameSettingFloat("fMaxsuPoise_BasePoiseHealth", 100.f);
 	}
 
 	float PoiseHealthHandler::GetBaseMass(RE::Actor* a_target)
@@ -50,10 +51,7 @@ namespace MaxsuPoise
 
 		using BipedSlot = RE::BipedObjectSlot;
 		static BipedSlot armorSlots[] = {
-			BipedSlot::kBody,
-			BipedSlot::kFeet,
-			BipedSlot::kHands,
-			BipedSlot::kHead
+			BipedSlot::kBody
 		};
 
 		auto baseArmorPoiseHealth = GetBaseArmorPoiseHealth();
@@ -71,12 +69,12 @@ namespace MaxsuPoise
 
 	float PoiseHealthHandler::GetBaseArmorPoiseHealth()
 	{
-		return 2.5f;
+		return GetGameSettingFloat("fMaxsuPoise_BaseArmorPoiseHealth", 2.5f);
 	}
 
 	float PoiseHealthHandler::GetHeavyArmorBouns()
 	{
-		return 0.2f;
+		return GetGameSettingFloat("fMaxsuPoise_HeavyArmorPoiseBonus", 1.0f);
 	}
 
 }

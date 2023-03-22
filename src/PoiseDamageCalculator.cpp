@@ -1,4 +1,5 @@
 #include "PoiseDamageCalculator.h"
+#include "Utils.h"
 
 namespace MaxsuPoise
 {
@@ -28,7 +29,7 @@ namespace MaxsuPoise
 
 	float PoiseDamageCalculator::GetBaseWeaponPoiseDamage()
 	{
-		return 25.0f;
+		return GetGameSettingFloat("fMaxsuPoise_BaseWeaponPoiseDamage", 20.0f);
 	}
 
 	float PoiseDamageCalculator::GetWeaponDamageMult(RE::TESObjectWEAP* a_weapon)
@@ -81,7 +82,7 @@ namespace MaxsuPoise
 
 	float PoiseDamageCalculator::GetBlockingMult()
 	{
-		return 0.0f;
+		return GetGameSettingFloat("fMaxsuPoise_BlockingMult", 0.0f);
 	}
 
 }

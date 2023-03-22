@@ -22,10 +22,10 @@ namespace MaxsuPoise
 		};
 		friend class CharacterEx;
 
-		static float GetPoiseRegenRate() { return 0.25f; }
+		static float GetPoiseRegenRate();
 		static float GetPoiseRegenDelayTimer(RE::Actor* a_target);
 		static float SetPoiseRegenDelayTimer(RE::Actor* a_target, const float& a_in);
-		static float GetMaxPoiseRegenDelayTime();
+		static float GetMaxRegenDelayTime();
 
 	private:
 		static void UpdatePoiseValue(RE::Actor* a_target, float a_delta);

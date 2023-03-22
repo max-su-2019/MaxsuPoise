@@ -1,5 +1,6 @@
 #include "PoiseRegenHandler.h"
 #include "PoiseHealthHandler.h"
+#include "Utils.h"
 
 namespace MaxsuPoise
 {
@@ -16,10 +17,7 @@ namespace MaxsuPoise
 
 		if (!a_target->IsInCombat() || currentPoiseHealth > totalPoiseHealth) {
 			currentPoiseHealth = totalPoiseHealth;
-			return;
-		}
-
-		if (!a_target->IsStaggering()) {
+		} else if (!a_target->IsStaggering()) {
 			auto regenDelayTimer = GetPoiseRegenDelayTimer(a_target);
 			if (regenDelayTimer > 0.f)
 				SetPoiseRegenDelayTimer(a_target, regenDelayTimer - a_delta);
@@ -33,9 +31,14 @@ namespace MaxsuPoise
 		PoiseHealthHandler::SetCurrentPoiseHealth(a_target, currentPoiseHealth);
 	}
 
-	float PoiseRegenHandler::GetMaxPoiseRegenDelayTime()
+	float PoiseRegenHandler::GetPoiseRegenRate()
 	{
-		return 1.0f;
+		return GetGameSettingFloat("fMaxsuPoise_PoiseRegen", 0.3f);
+	}
+
+	float PoiseRegenHandler::GetMaxRegenDelayTime()
+	{
+		return GetGameSettingFloat("fMaxsuPoise_RegenDelayTime", 1.5f);
 	}
 
 	static constexpr char CURRENT_REGEN__DELAYGV[] = "MaxsuPoise_RegenDelayTimer";

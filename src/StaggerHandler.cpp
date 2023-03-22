@@ -2,6 +2,7 @@
 #include "PoiseDamageCalculator.h"
 #include "PoiseHealthHandler.h"
 #include "PoiseRegenHandler.h"
+#include "Utils.h"
 
 namespace MaxsuPoise
 {
@@ -41,13 +42,19 @@ namespace MaxsuPoise
 			}
 		}
 
-		if (target->IsStaggering())
-			PoiseRegenHandler::SetPoiseRegenDelayTimer(target, PoiseRegenHandler::GetMaxPoiseRegenDelayTime());
+		//if (target->IsStaggering())
+		PoiseRegenHandler::SetPoiseRegenDelayTimer(target, PoiseRegenHandler::GetMaxRegenDelayTime());
 	}
 
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
 	{
-		float damageTHLD_Arr[StaggerLevel::kLargest] = { 0.15f, 0.25f, 0.5f, 1.0f };
+		float damageTHLD_Arr[StaggerLevel::kLargest] = {
+			GetGameSettingFloat("fMaxsuPoise_SmallStaggerTHLD", 0.15f),
+			GetGameSettingFloat("fMaxsuPoise_MediumStaggerTHLD", 0.30f),
+			GetGameSettingFloat("fMaxsuPoise_LargeStaggerTHLD", 0.5f),
+			1.0f
+		};
+
 		for (std::uint32_t i = StaggerLevel::kNone; i < StaggerLevel::kLargest; i++) {
 			if (a_DamagePercent < damageTHLD_Arr[i])
 				return static_cast<StaggerLevel>(i);
@@ -55,5 +62,4 @@ namespace MaxsuPoise
 
 		return StaggerLevel::kLargest;
 	}
-
 }
