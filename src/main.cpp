@@ -1,6 +1,5 @@
 #include "HitEventHandler.h"
 #include "PoiseRegenHandler.h"
-#include "PoiseSettings.h"
 
 DLLEXPORT constinit auto SKSEPlugin_Version = []() noexcept {
 	SKSE::PluginVersionData data{};
@@ -38,7 +37,6 @@ DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 	INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
 
 	// do stuff
-	MaxsuPoise::PoiseSettings::Add();
 	MaxsuPoise::HitEventHandler::InstallHooks();
 	MaxsuPoise::PoiseRegenHandler::CharacterEx::InstallHook();
 

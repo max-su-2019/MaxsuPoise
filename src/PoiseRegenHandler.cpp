@@ -12,6 +12,9 @@ namespace MaxsuPoise
 
 	void PoiseRegenHandler::UpdatePoiseValue(RE::Actor* a_target, float a_delta)
 	{
+		if (!a_target || !a_target->currentProcess || !a_target->currentProcess->high)
+			return;
+
 		const auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(a_target);
 		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(a_target);
 
