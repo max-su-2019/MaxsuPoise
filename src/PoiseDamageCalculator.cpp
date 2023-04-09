@@ -20,7 +20,7 @@ namespace MaxsuPoise
 		float ModIncomingStagger = GetPerkModIncomingStagger(target);
 		float StrengthMult = GetStrengthMult(aggressor, target);
 
-		result = baseWeapDamage * weapDamageMult * (animDamageMult + attackDataMult + ModTargetStagger * ModIncomingStagger) * StrengthMult;
+		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (animDamageMult + attackDataMult + ModTargetStagger * ModIncomingStagger);
 		if (a_hitData->flags.any(RE::HitData::Flag::kBlocked)) {
 			result *= GetBlockingMult();
 		}

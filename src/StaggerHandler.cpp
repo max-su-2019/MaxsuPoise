@@ -49,8 +49,9 @@ namespace MaxsuPoise
 		if (selectedRef && target == selectedRef.get()) {
 			std::ostringstream logs;
 			logs << "-------MaxsuPoise Stagger Result-------" << std::endl;
+			logs << "TotalHealth: " << totalPoiseHealth << std::endl;
 			logs << "Damage: " << poiseDamage << std::endl;
-			logs << "Health: " << currentPoiseHealth << std::endl;
+			logs << "CurrentHealth: " << currentPoiseHealth << std::endl;
 			logs << "StaggerLevel: " << staggerLevel << std::endl;
 			logs << "ImmuneLevel: " << immuneLevel << std::endl;
 			logs << "---------------------------------------" << std::endl;
