@@ -18,8 +18,9 @@ namespace MaxsuPoise
 		float attackDataMult = GetAttackDataDamageMult(a_hitData->attackData.get());
 		float ModTargetStagger = GetPerkModTargetStagger(aggressor);
 		float ModIncomingStagger = GetPerkModIncomingStagger(target);
+		float StrengthMult = GetStrengthMult(aggressor, target);
 
-		result = baseWeapDamage * weapDamageMult * (animDamageMult + attackDataMult + ModTargetStagger * ModIncomingStagger);
+		result = baseWeapDamage * weapDamageMult * (animDamageMult + attackDataMult + ModTargetStagger * ModIncomingStagger) * StrengthMult;
 		if (a_hitData->flags.any(RE::HitData::Flag::kBlocked)) {
 			result *= GetBlockingMult();
 		}
@@ -83,6 +84,13 @@ namespace MaxsuPoise
 	float PoiseDamageCalculator::GetBlockingMult()
 	{
 		return GetGameSettingFloat("fMaxsuPoise_BlockingMult", 0.0f);
+	}
+
+	float PoiseDamageCalculator::GetStrengthMult(RE::Actor* a_aggressor, RE::Actor* a_target)
+	{
+		float attackerSTRG = GetActorMass(a_aggressor) * a_aggressor->GetScale();
+		float targetSTRG = GetActorMass(a_target) * a_target->GetScale();
+		return attackerSTRG / targetSTRG;
 	}
 
 }

@@ -24,7 +24,7 @@ namespace MaxsuPoise
 		if (!a_target)
 			return 0.f;
 
-		auto actorPoiseHealth = GetBasePoiseHealth() * GetBaseMass(a_target) * a_target->GetScale();
+		auto actorPoiseHealth = GetBasePoiseHealth() * GetActorMass(a_target) * a_target->GetScale();
 		auto armorPoiseHealth = GetTotalArmorPoiseHealth(a_target);
 		return actorPoiseHealth + armorPoiseHealth;
 	}
@@ -32,14 +32,6 @@ namespace MaxsuPoise
 	float PoiseHealthHandler::GetBasePoiseHealth()
 	{
 		return GetGameSettingFloat("fMaxsuPoise_BasePoiseHealth", 100.f);
-	}
-
-	float PoiseHealthHandler::GetBaseMass(RE::Actor* a_target)
-	{
-		if (!a_target || !a_target->race)
-			return 0.f;
-
-		return a_target->race->data.baseMass;
 	}
 
 	float PoiseHealthHandler::GetTotalArmorPoiseHealth(RE::Actor* a_target)

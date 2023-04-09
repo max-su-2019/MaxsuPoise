@@ -18,7 +18,7 @@ namespace MaxsuPoise
 		const auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(a_target);
 		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(a_target);
 
-		if (!a_target->IsInCombat() || currentPoiseHealth > totalPoiseHealth) {
+		if (!a_target->IsInCombat() || (currentPoiseHealth - totalPoiseHealth) >= 0.01f) {
 			currentPoiseHealth = totalPoiseHealth;
 		} else if (!a_target->IsStaggering()) {
 			auto regenDelayTimer = GetPoiseRegenDelayTimer(a_target);

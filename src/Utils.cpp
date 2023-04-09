@@ -23,4 +23,23 @@ namespace MaxsuPoise
 
 		return a_default;
 	}
+
+	float GetActorMass(RE::Actor* a_target)
+	{
+		if (!a_target || !a_target->race)
+			return 0.f;
+
+		return a_target->race->data.baseMass;
+	}
+
+	void CPrint(const char* a_fmt, ...)
+	{
+		auto console = RE::ConsoleLog::GetSingleton();
+		if (console) {
+			std::va_list args;
+			va_start(args, a_fmt);
+			console->VPrint(a_fmt, args);
+			va_end(args);
+		}
+	}
 }

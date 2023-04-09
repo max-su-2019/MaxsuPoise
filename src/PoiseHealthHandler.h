@@ -11,8 +11,6 @@ namespace MaxsuPoise
 
 	private:
 		static float GetBasePoiseHealth();
-		static float GetBaseMass(RE::Actor* a_target);
-
 		static float GetTotalArmorPoiseHealth(RE::Actor* a_target);
 		static float GetBaseArmorPoiseHealth();
 		static float GetHeavyArmorBouns();

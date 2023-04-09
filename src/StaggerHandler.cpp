@@ -32,11 +32,11 @@ namespace MaxsuPoise
 		currentPoiseHealth -= poiseDamage;
 		PoiseHealthHandler::SetCurrentPoiseHealth(target, currentPoiseHealth);
 
+		auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
+		auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
 		if (currentPoiseHealth <= 0.f) {
 			TryStagger(target, 1.0f, aggressor);
 		} else {
-			auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
-			auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
 			if (staggerLevel && staggerLevel > immuneLevel) {
 				TryStagger(target, 0.25f * (staggerLevel) + 0.01f, aggressor);
 			}
@@ -44,6 +44,18 @@ namespace MaxsuPoise
 
 		//if (target->IsStaggering())
 		PoiseRegenHandler::SetPoiseRegenDelayTimer(target, PoiseRegenHandler::GetMaxRegenDelayTime());
+
+		auto selectedRef = RE::Console::GetSelectedRef();
+		if (selectedRef && target == selectedRef.get()) {
+			std::ostringstream logs;
+			logs << "-------MaxsuPoise Stagger Result-------" << std::endl;
+			logs << "Damage: " << poiseDamage << std::endl;
+			logs << "Health: " << currentPoiseHealth << std::endl;
+			logs << "StaggerLevel: " << staggerLevel << std::endl;
+			logs << "ImmuneLevel: " << immuneLevel << std::endl;
+			logs << "---------------------------------------" << std::endl;
+			CPrint(logs.str().c_str());
+		}
 	}
 
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
