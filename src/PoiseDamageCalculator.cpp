@@ -30,7 +30,7 @@ namespace MaxsuPoise
 
 	float PoiseDamageCalculator::GetBaseWeaponPoiseDamage()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_BaseWeaponPoiseDamage", 20.0f);
+		return GetGameSettingFloat("fMaxsuPoise_BaseWeaponPoiseDamage", 10.0f);
 	}
 
 	float PoiseDamageCalculator::GetWeaponDamageMult(RE::TESObjectWEAP* a_weapon)

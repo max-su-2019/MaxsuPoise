@@ -21,14 +21,16 @@ namespace MaxsuPoise
 		if (!a_target->IsInCombat() || (currentPoiseHealth - totalPoiseHealth) >= 0.01f) {
 			currentPoiseHealth = totalPoiseHealth;
 		} else if (!a_target->IsStaggering()) {
-			auto regenDelayTimer = GetPoiseRegenDelayTimer(a_target);
+			auto regenDelayTimer = RegenDelayHandler::GetPoiseRegenDelayTimer(a_target);
 			if (regenDelayTimer > 0.f)
-				SetPoiseRegenDelayTimer(a_target, regenDelayTimer - a_delta);
+				RegenDelayHandler::SetPoiseRegenDelayTimer(a_target, regenDelayTimer - a_delta);
 			else {
-				currentPoiseHealth > 0.f ?
-					currentPoiseHealth += totalPoiseHealth * a_delta * GetPoiseRegenRate() :
-					currentPoiseHealth = totalPoiseHealth;
+				currentPoiseHealth += totalPoiseHealth * a_delta * GetPoiseRegenRate();
 			}
+
+			auto staggerProtectTimer = StaggerProtectHandler::GetStaggerProtectTimer(a_target);
+			if (staggerProtectTimer > 0.f)
+				StaggerProtectHandler::SetStaggerProtectTimer(a_target, staggerProtectTimer - a_delta);
 		}
 
 		PoiseHealthHandler::SetCurrentPoiseHealth(a_target, currentPoiseHealth);
@@ -36,28 +38,44 @@ namespace MaxsuPoise
 
 	float PoiseRegenHandler::GetPoiseRegenRate()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_PoiseRegen", 0.3f);
+		return GetGameSettingFloat("fMaxsuPoise_PoiseRegen", 0.05f);
 	}
 
-	float PoiseRegenHandler::GetMaxRegenDelayTime()
+	float RegenDelayHandler::GetMaxRegenDelayTime()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_RegenDelayTime", 1.5f);
+		return GetGameSettingFloat("fMaxsuPoise_RegenDelayTime", 1.0f);
 	}
 
-	static constexpr char CURRENT_REGEN__DELAYGV[] = "MaxsuPoise_RegenDelayTimer";
-
-	float PoiseRegenHandler::GetPoiseRegenDelayTimer(RE::Actor* a_target)
+	float RegenDelayHandler::GetPoiseRegenDelayTimer(RE::Actor* a_target)
 	{
 		float result = 0.f;
-		if (!a_target || !a_target->GetGraphVariableFloat(CURRENT_REGEN__DELAYGV, result))
-			WARN("Not Graph Variable Float Found: {}", CURRENT_REGEN__DELAYGV);
+		if (!a_target || !a_target->GetGraphVariableFloat(CURRENT_REGEN_DELAY_GV, result))
+			WARN("Not Graph Variable Float Found: {}", CURRENT_REGEN_DELAY_GV);
 
 		return result;
 	}
 
-	float PoiseRegenHandler::SetPoiseRegenDelayTimer(RE::Actor* a_target, const float& a_in)
+	bool RegenDelayHandler::SetPoiseRegenDelayTimer(RE::Actor* a_target, const float& a_in)
 	{
-		return a_target && a_target->SetGraphVariableFloat(CURRENT_REGEN__DELAYGV, a_in);
+		return a_target && a_target->SetGraphVariableFloat(CURRENT_REGEN_DELAY_GV, a_in);
 	}
 
+	float StaggerProtectHandler::GetStaggerProtectTimer(RE::Actor* a_target)
+	{
+		float result = 0.f;
+		if (!a_target || !a_target->GetGraphVariableFloat(CURRENT_STAGGER_TIMER_GV, result))
+			WARN("Not Graph Variable Float Found: {}", CURRENT_STAGGER_TIMER_GV);
+
+		return result;
+	}
+
+	bool StaggerProtectHandler::SetStaggerProtectTimer(RE::Actor* a_target, const float& a_in)
+	{
+		return a_target && a_target->SetGraphVariableFloat(CURRENT_STAGGER_TIMER_GV, a_in);
+	}
+
+	float StaggerProtectHandler::GetMaxStaggerProtectTime()
+	{
+		return GetGameSettingFloat("fMaxsuPoise_StaggerProtectTime", 0.85f);
+	}
 }

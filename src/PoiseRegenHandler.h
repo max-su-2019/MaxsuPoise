@@ -23,15 +23,38 @@ namespace MaxsuPoise
 		friend class CharacterEx;
 
 		static float GetPoiseRegenRate();
-		static float GetPoiseRegenDelayTimer(RE::Actor* a_target);
-		static float SetPoiseRegenDelayTimer(RE::Actor* a_target, const float& a_in);
-		static float GetMaxRegenDelayTime();
 
 	private:
 		static void UpdatePoiseValue(RE::Actor* a_target, float a_delta);
 
 		PoiseRegenHandler() = delete;
 		~PoiseRegenHandler() = delete;
+	};
+
+	class RegenDelayHandler
+	{
+		RegenDelayHandler() = delete;
+		~RegenDelayHandler() = delete;
+
+		static constexpr char CURRENT_REGEN_DELAY_GV[] = "MaxsuPoise_RegenDelayTimer";
+
+	public:
+		static float GetPoiseRegenDelayTimer(RE::Actor* a_target);
+		static bool SetPoiseRegenDelayTimer(RE::Actor* a_target, const float& a_in);
+		static float GetMaxRegenDelayTime();
+	};
+
+	class StaggerProtectHandler
+	{
+		StaggerProtectHandler() = delete;
+		~StaggerProtectHandler() = delete;
+
+		static constexpr char CURRENT_STAGGER_TIMER_GV[] = "MaxsuPoise_StaggerProtectTimer";
+
+	public:
+		static float GetStaggerProtectTimer(RE::Actor* a_target);
+		static bool SetStaggerProtectTimer(RE::Actor* a_target, const float& a_in);
+		static float GetMaxStaggerProtectTime();
 	};
 
 }

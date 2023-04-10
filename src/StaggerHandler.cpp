@@ -21,29 +21,31 @@ namespace MaxsuPoise
 
 		auto aggressor = a_hitData->aggressor ? a_hitData->aggressor.get().get() : nullptr;
 
-		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(target);
-		auto regenDelayTimer = PoiseRegenHandler::GetPoiseRegenDelayTimer(target);
-
-		if (currentPoiseHealth <= 0.f && (target->IsStaggering() || regenDelayTimer))
+		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(target);
+		if (staggerProtectTime > 0.f && (target->IsStaggering()))
 			return;
 
 		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(target);
+		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(target);
 		auto poiseDamage = PoiseDamageCalculator::GetPhysicalPoiseDamage(a_hitData);
 		currentPoiseHealth -= poiseDamage;
-		PoiseHealthHandler::SetCurrentPoiseHealth(target, currentPoiseHealth);
 
 		auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
 		auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
 		if (currentPoiseHealth <= 0.f) {
 			TryStagger(target, 1.0f, aggressor);
-		} else {
+			if (target->IsStaggering()) {
+				StaggerProtectHandler::SetStaggerProtectTimer(target, StaggerProtectHandler::GetMaxStaggerProtectTime());
+				currentPoiseHealth = totalPoiseHealth;
+			}
+		} else if (staggerProtectTime <= 0.f) {
 			if (staggerLevel && staggerLevel > immuneLevel) {
 				TryStagger(target, 0.25f * (staggerLevel) + 0.01f, aggressor);
 			}
 		}
 
-		//if (target->IsStaggering())
-		PoiseRegenHandler::SetPoiseRegenDelayTimer(target, PoiseRegenHandler::GetMaxRegenDelayTime());
+		PoiseHealthHandler::SetCurrentPoiseHealth(target, currentPoiseHealth);
+		RegenDelayHandler::SetPoiseRegenDelayTimer(target, RegenDelayHandler::GetMaxRegenDelayTime());
 
 		auto selectedRef = RE::Console::GetSelectedRef();
 		if (selectedRef && target == selectedRef.get()) {
@@ -62,8 +64,8 @@ namespace MaxsuPoise
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
 	{
 		float damageTHLD_Arr[StaggerLevel::kLargest] = {
-			GetGameSettingFloat("fMaxsuPoise_SmallStaggerTHLD", 0.15f),
-			GetGameSettingFloat("fMaxsuPoise_MediumStaggerTHLD", 0.30f),
+			GetGameSettingFloat("fMaxsuPoise_SmallStaggerTHLD", 0.17f),
+			GetGameSettingFloat("fMaxsuPoise_MediumStaggerTHLD", 0.25f),
 			GetGameSettingFloat("fMaxsuPoise_LargeStaggerTHLD", 0.5f),
 			1.0f
 		};

@@ -31,7 +31,7 @@ namespace MaxsuPoise
 
 	float PoiseHealthHandler::GetBasePoiseHealth()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_BasePoiseHealth", 100.f);
+		return GetGameSettingFloat("fMaxsuPoise_BasePoiseHealth", 40.f);
 	}
 
 	float PoiseHealthHandler::GetTotalArmorPoiseHealth(RE::Actor* a_target)
@@ -61,12 +61,12 @@ namespace MaxsuPoise
 
 	float PoiseHealthHandler::GetBaseArmorPoiseHealth()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_BaseArmorPoiseHealth", 2.5f);
+		return GetGameSettingFloat("fMaxsuPoise_BaseArmorPoiseHealth", 50.f);
 	}
 
 	float PoiseHealthHandler::GetHeavyArmorBouns()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_HeavyArmorPoiseBonus", 1.0f);
+		return GetGameSettingFloat("fMaxsuPoise_HeavyArmorPoiseBonus", 0.5f);
 	}
 
 }
