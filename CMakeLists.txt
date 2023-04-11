@@ -13,7 +13,7 @@ include(GNUInstallDirs)
 # info
 project(
 	MaxsuPoise
-	VERSION 0.1.6
+	VERSION 0.1.7
 	LANGUAGES CXX
 )
 

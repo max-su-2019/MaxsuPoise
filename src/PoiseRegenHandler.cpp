@@ -10,6 +10,12 @@ namespace MaxsuPoise
 		UpdatePoiseValue(this, RE::GetSecondsSinceLastFrame());
 	}
 
+	void PoiseRegenHandler::PlayerEx::Hook_Update(float a_delta)
+	{
+		func(this, a_delta);
+		UpdatePoiseValue(this, a_delta);
+	}
+
 	void PoiseRegenHandler::UpdatePoiseValue(RE::Actor* a_target, float a_delta)
 	{
 		if (!a_target || !a_target->currentProcess || !a_target->currentProcess->high)
@@ -78,4 +84,5 @@ namespace MaxsuPoise
 	{
 		return GetGameSettingFloat("fMaxsuPoise_StaggerProtectTime", 0.85f);
 	}
+
 }

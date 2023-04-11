@@ -35,7 +35,8 @@ namespace MaxsuPoise
 		if (currentPoiseHealth <= 0.f) {
 			TryStagger(target, 1.0f, aggressor);
 			if (target->IsStaggering()) {
-				StaggerProtectHandler::SetStaggerProtectTimer(target, StaggerProtectHandler::GetMaxStaggerProtectTime());
+				staggerProtectTime = StaggerProtectHandler::GetMaxStaggerProtectTime();
+				StaggerProtectHandler::SetStaggerProtectTimer(target, staggerProtectTime);
 				currentPoiseHealth = totalPoiseHealth;
 			}
 		} else if (staggerProtectTime <= 0.f) {
@@ -51,11 +52,17 @@ namespace MaxsuPoise
 		if (selectedRef && target == selectedRef.get()) {
 			std::ostringstream logs;
 			logs << "-------MaxsuPoise Stagger Result-------" << std::endl;
-			logs << "TotalHealth: " << totalPoiseHealth << std::endl;
-			logs << "Damage: " << poiseDamage << std::endl;
-			logs << "CurrentHealth: " << currentPoiseHealth << std::endl;
-			logs << "StaggerLevel: " << staggerLevel << std::endl;
-			logs << "ImmuneLevel: " << immuneLevel << std::endl;
+
+			if (staggerProtectTime > 0.f)
+				logs << "Largest Stagger! TotalHealth: " << totalPoiseHealth << std::endl;
+			else {
+				logs << "TotalHealth: " << totalPoiseHealth << std::endl;
+				logs << "Damage: " << poiseDamage << std::endl;
+				logs << "CurrentHealth: " << currentPoiseHealth << std::endl;
+				logs << "StaggerLevel: " << staggerLevel << std::endl;
+				logs << "ImmuneLevel: " << immuneLevel << std::endl;
+			}
+
 			logs << "---------------------------------------" << std::endl;
 			CPrint(logs.str().c_str());
 		}

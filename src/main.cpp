@@ -39,6 +39,7 @@ DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 	// do stuff
 	MaxsuPoise::HitEventHandler::InstallHooks();
 	MaxsuPoise::PoiseRegenHandler::CharacterEx::InstallHook();
+	MaxsuPoise::PoiseRegenHandler::PlayerEx::InstallHook();
 
 	return true;
 }
