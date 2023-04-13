@@ -12,8 +12,8 @@ namespace MaxsuPoise
 		static float GetWeaponDamageMult(RE::TESObjectWEAP* a_weapon);
 		static float GetAnimationDamageMult(RE::Actor* a_aggressor);
 		static float GetAttackDataDamageMult(RE::BGSAttackData* a_attackData);
-		static float GetPerkModTargetStagger(RE::Actor* a_aggressor);
-		static float GetPerkModIncomingStagger(RE::Actor* a_target);
+		static float GetPerkModTargetStagger(RE::Actor* a_aggressor, RE::Actor* a_target);
+		static float GetPerkModIncomingStagger(RE::Actor* a_aggressor, RE::Actor* a_target);
 		static float GetBlockingMult();
 		static float GetStrengthMult(RE::Actor* a_aggressor, RE::Actor* a_target);
 

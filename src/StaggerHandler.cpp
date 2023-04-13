@@ -20,6 +20,8 @@ namespace MaxsuPoise
 			return;
 
 		auto aggressor = a_hitData->aggressor ? a_hitData->aggressor.get().get() : nullptr;
+		if (!aggressor)
+			return;
 
 		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(target);
 		if (staggerProtectTime > 0.f && (target->IsStaggering()))

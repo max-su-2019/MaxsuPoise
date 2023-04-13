@@ -1,4 +1,5 @@
 #include "HitEventHandler.h"
+#include "PerkEntry_Hooks.h"
 #include "PoiseRegenHandler.h"
 
 DLLEXPORT constinit auto SKSEPlugin_Version = []() noexcept {
@@ -40,6 +41,7 @@ DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 	MaxsuPoise::HitEventHandler::InstallHooks();
 	MaxsuPoise::PoiseRegenHandler::CharacterEx::InstallHook();
 	MaxsuPoise::PoiseRegenHandler::PlayerEx::InstallHook();
+	MaxsuPoise::PerkEntryHook::Install();
 
 	return true;
 }

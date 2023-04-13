@@ -16,11 +16,11 @@ namespace MaxsuPoise
 		float weapDamageMult = GetWeaponDamageMult(a_hitData->weapon);
 		float animDamageMult = aggressor ? GetAnimationDamageMult(aggressor) : 0.f;
 		float attackDataMult = GetAttackDataDamageMult(a_hitData->attackData.get());
-		float ModTargetStagger = GetPerkModTargetStagger(aggressor);
-		float ModIncomingStagger = GetPerkModIncomingStagger(target);
+		float ModTargetStagger = GetPerkModTargetStagger(aggressor, target);
+		float ModIncomingStagger = GetPerkModIncomingStagger(aggressor, target);
 		float StrengthMult = GetStrengthMult(aggressor, target);
 
-		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (animDamageMult + attackDataMult + ModTargetStagger * ModIncomingStagger);
+		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (1 + animDamageMult + attackDataMult)* ModTargetStagger * ModIncomingStagger;
 		if (a_hitData->flags.any(RE::HitData::Flag::kBlocked)) {
 			result *= GetBlockingMult();
 		}
@@ -71,14 +71,20 @@ namespace MaxsuPoise
 		return a_attackData->data.staggerOffset;
 	}
 
-	float PoiseDamageCalculator::GetPerkModTargetStagger(RE::Actor* a_aggressor)
+	float PoiseDamageCalculator::GetPerkModTargetStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
 	{
-		return 1.0f;
+		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
+		float result = 1.0f;
+		ApplyPerkEntryPoint(EntryPoint::kModTargetStagger, a_aggressor, a_target, &result);
+		return result;
 	}
 
-	float PoiseDamageCalculator::GetPerkModIncomingStagger(RE::Actor* a_target)
+	float PoiseDamageCalculator::GetPerkModIncomingStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
 	{
-		return 1.0f;
+		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
+		float result = 1.0f;
+		ApplyPerkEntryPoint(EntryPoint::kModIncomingStagger, a_target, a_aggressor, &result);
+		return result;
 	}
 
 	float PoiseDamageCalculator::GetBlockingMult()
