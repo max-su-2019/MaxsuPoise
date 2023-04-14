@@ -19,10 +19,11 @@ namespace MaxsuPoise
 		float ModTargetStagger = GetPerkModTargetStagger(aggressor, target);
 		float ModIncomingStagger = GetPerkModIncomingStagger(aggressor, target);
 		float StrengthMult = GetStrengthMult(aggressor, target);
+		float BlockingMult = GetBlockingMult(a_hitData);
 
-		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (1 + animDamageMult + attackDataMult)* ModTargetStagger * ModIncomingStagger;
+		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (1 + animDamageMult + attackDataMult) * ModTargetStagger * ModIncomingStagger;
 		if (a_hitData->flags.any(RE::HitData::Flag::kBlocked)) {
-			result *= GetBlockingMult();
+			result *= BlockingMult;
 		}
 
 		return result;
@@ -87,9 +88,18 @@ namespace MaxsuPoise
 		return result;
 	}
 
-	float PoiseDamageCalculator::GetBlockingMult()
+	float PoiseDamageCalculator::GetBlockingMult(const RE::HitData* a_hitData)
 	{
-		return GetGameSettingFloat("fMaxsuPoise_BlockingMult", 0.0f);
+		static enum BlockedModes {
+			kPercentBlocked = 0,
+			kFullyBlocked = 1
+		};
+
+		auto blockedMode = GetGameSettingUInt("uMaxsuPoise_BlockedMode", 0);
+		if (a_hitData && blockedMode == BlockedModes::kPercentBlocked)
+			return (1.f - std::clamp(a_hitData->percentBlocked, 0.f, 1.f));
+
+		return 0.f;
 	}
 
 	float PoiseDamageCalculator::GetStrengthMult(RE::Actor* a_aggressor, RE::Actor* a_target)
@@ -98,5 +108,4 @@ namespace MaxsuPoise
 		float targetSTRG = GetActorMass(a_target) * a_target->GetScale();
 		return attackerSTRG / targetSTRG;
 	}
-
 }
