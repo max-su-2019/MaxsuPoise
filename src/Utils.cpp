@@ -48,4 +48,9 @@ namespace MaxsuPoise
 		REL::Relocation<func_t> func{ REL::RelocationID(23073, 23526) };  // 1.5.97 14032ECE0
 		return func(entry, actor_a, actor_b, out);
 	}
+
+	bool IsStaggerAccurateCheck(RE::Actor* a_target)
+	{
+		return a_target->IsStaggering() || a_target->IsStaggered();
+	}
 }

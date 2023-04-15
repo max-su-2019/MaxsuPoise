@@ -24,7 +24,7 @@ namespace MaxsuPoise
 			return;
 
 		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(target);
-		if (staggerProtectTime > 0.f && (target->IsStaggering()))
+		if (staggerProtectTime > 0.f && IsStaggerAccurateCheck(target))
 			return;
 
 		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(target);
@@ -36,7 +36,7 @@ namespace MaxsuPoise
 		auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
 		if (currentPoiseHealth <= 0.f) {
 			TryStagger(target, 1.0f, aggressor);
-			if (target->IsStaggering()) {
+			if (IsStaggerAccurateCheck(target)) {
 				staggerProtectTime = StaggerProtectHandler::GetMaxStaggerProtectTime();
 				StaggerProtectHandler::SetStaggerProtectTimer(target, staggerProtectTime);
 				currentPoiseHealth = totalPoiseHealth;

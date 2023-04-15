@@ -26,7 +26,7 @@ namespace MaxsuPoise
 
 		if (!a_target->IsInCombat() || (currentPoiseHealth - totalPoiseHealth) >= 0.01f) {
 			currentPoiseHealth = totalPoiseHealth;
-		} else if (!a_target->IsStaggering()) {
+		} else if (!IsStaggerAccurateCheck(a_target)) {
 			auto regenDelayTimer = RegenDelayHandler::GetPoiseRegenDelayTimer(a_target);
 			if (regenDelayTimer > 0.f)
 				RegenDelayHandler::SetPoiseRegenDelayTimer(a_target, regenDelayTimer - a_delta);

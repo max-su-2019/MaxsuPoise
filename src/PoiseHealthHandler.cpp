@@ -53,6 +53,10 @@ namespace MaxsuPoise
 			auto armor = a_target->GetWornArmor(slot);
 			if (armor && (armor->IsLightArmor() || armor->IsHeavyArmor())) {
 				result += armor->IsLightArmor() ? baseArmorPoiseHealth : baseArmorPoiseHealth * (1 + heavyArmorBouns);
+			} else {
+				armor = a_target->GetSkin(slot);
+				if (armor && (armor->IsLightArmor() || armor->IsHeavyArmor()))
+					result += armor->IsLightArmor() ? baseArmorPoiseHealth : baseArmorPoiseHealth * (1 + heavyArmorBouns);
 			}
 		}
 
@@ -68,5 +72,4 @@ namespace MaxsuPoise
 	{
 		return GetGameSettingFloat("fMaxsuPoise_HeavyArmorPoiseBonus", 0.5f);
 	}
-
 }

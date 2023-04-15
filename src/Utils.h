@@ -13,4 +13,5 @@ namespace MaxsuPoise
 
 	void ApplyPerkEntryPoint(INT32 entry, RE::Actor* actor_a, RE::Actor* actor_b, float* out);
 
+	bool IsStaggerAccurateCheck(RE::Actor* a_target);
 }

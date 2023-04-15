@@ -1,4 +1,5 @@
 #include "PoiseDamageCalculator.h"
+#include "SettingsHandler.h"
 #include "Utils.h"
 
 namespace MaxsuPoise
@@ -39,21 +40,16 @@ namespace MaxsuPoise
 		if (!a_weapon)
 			return 0.f;
 
-		switch (a_weapon->GetWeaponType()) {
-		case RE::WEAPON_TYPE::kOneHandSword:
-		case RE::WEAPON_TYPE::kOneHandAxe:
-		case RE::WEAPON_TYPE::kOneHandMace:
-			return 1.0f;
+		if (a_weapon->HasKeywordString("MaxsuPoise_UniqueWeapStagger"))
+			return a_weapon->GetStagger();
 
-		case RE::WEAPON_TYPE::kOneHandDagger:
-			return 0.5f;
-
-		case RE::WEAPON_TYPE::kTwoHandAxe:
-		case RE::WEAPON_TYPE::kTwoHandSword:
-			return 1.5f;
-
-		default:
-			break;
+		auto settingsHandler = SettingsHandler::GetSingleton();
+		if (settingsHandler) {
+			auto weapType = a_weapon->GetWeaponType();
+			auto item = settingsHandler->WeapTypeMultMap.find(weapType);
+			if (item != settingsHandler->WeapTypeMultMap.end()) {
+				return item->second;
+			}
 		}
 
 		return 0.0f;
