@@ -4,7 +4,7 @@
 
 namespace MaxsuPoise
 {
-	float PoiseDamageCalculator::GetPhysicalPoiseDamage(const RE::HitData* a_hitData)
+	float PoiseDamageCalculator::GetWeaponPoiseDamage(const RE::HitData* a_hitData)
 	{
 		float result = 0.f;
 		auto target = a_hitData->target ? a_hitData->target.get().get() : nullptr;
@@ -65,22 +65,6 @@ namespace MaxsuPoise
 		return a_attackData->data.staggerOffset;
 	}
 
-	float PoiseDamageCalculator::GetPerkModTargetStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
-	{
-		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
-		float result = 1.0f;
-		ApplyPerkEntryPoint(EntryPoint::kModTargetStagger, a_aggressor, a_target, &result);
-		return result;
-	}
-
-	float PoiseDamageCalculator::GetPerkModIncomingStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
-	{
-		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
-		float result = 1.0f;
-		ApplyPerkEntryPoint(EntryPoint::kModIncomingStagger, a_target, a_aggressor, &result);
-		return result;
-	}
-
 	float PoiseDamageCalculator::GetBlockingMult(const RE::HitData* a_hitData)
 	{
 		static enum BlockedModes {
@@ -100,5 +84,38 @@ namespace MaxsuPoise
 		float attackerSTRG = GetActorMass(a_aggressor) * a_aggressor->GetScale();
 		float targetSTRG = GetActorMass(a_target) * a_target->GetScale();
 		return attackerSTRG / targetSTRG;
+	}
+
+	float PoiseDamageCalculator::GetMagicPoiseDamage(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
+	{
+		if (!a_target)
+			return 0.0f;
+
+		auto baseMagicDamage = GetBaseMagicPoiseDamage();
+		float ModTargetStagger = GetPerkModTargetStagger(a_aggressor, a_target);
+		float ModIncomingStagger = GetPerkModIncomingStagger(a_aggressor, a_target);
+
+		return baseMagicDamage * a_staggerMult * ModTargetStagger * ModIncomingStagger;
+	}
+
+	float PoiseDamageCalculator::GetBaseMagicPoiseDamage()
+	{
+		return GetGameSettingFloat("fMaxsuPoise_BaseMagicPoiseDamage", 100.0f);
+	}
+
+	float PoiseDamageCalculator::GetPerkModTargetStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
+	{
+		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
+		float result = 1.0f;
+		ApplyPerkEntryPoint(EntryPoint::kModTargetStagger, a_aggressor, a_target, &result);
+		return result;
+	}
+
+	float PoiseDamageCalculator::GetPerkModIncomingStagger(RE::Actor* a_aggressor, RE::Actor* a_target)
+	{
+		using EntryPoint = RE::BGSEntryPointPerkEntry::EntryPoint;
+		float result = 1.0f;
+		ApplyPerkEntryPoint(EntryPoint::kModIncomingStagger, a_target, a_aggressor, &result);
+		return result;
 	}
 }

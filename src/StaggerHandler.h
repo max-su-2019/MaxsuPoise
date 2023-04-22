@@ -14,7 +14,8 @@ namespace MaxsuPoise
 	class StaggerHandler
 	{
 	public:
-		static void ProcessStagger(const RE::HitData* a_hitdata);
+		static void ProcessWeaponStagger(const RE::HitData* a_hitdata);
+		static void ProcessMagicStagger(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor);
 
 	private:
 		static StaggerLevel GetStaggerLevel(const float& a_DamagePercent);

@@ -13,7 +13,7 @@ namespace MaxsuPoise
 		func(a_target, a_staggerMult, a_aggressor);
 	}
 
-	void StaggerHandler::ProcessStagger(const RE::HitData* a_hitData)
+	void StaggerHandler::ProcessWeaponStagger(const RE::HitData* a_hitData)
 	{
 		auto target = a_hitData && a_hitData->target ? a_hitData->target.get().get() : nullptr;
 		if (!target)
@@ -29,7 +29,7 @@ namespace MaxsuPoise
 
 		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(target);
 		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(target);
-		auto poiseDamage = PoiseDamageCalculator::GetPhysicalPoiseDamage(a_hitData);
+		auto poiseDamage = PoiseDamageCalculator::GetWeaponPoiseDamage(a_hitData);
 		currentPoiseHealth -= poiseDamage;
 
 		auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
@@ -53,7 +53,59 @@ namespace MaxsuPoise
 		auto selectedRef = RE::Console::GetSelectedRef();
 		if (selectedRef && target == selectedRef.get()) {
 			std::ostringstream logs;
-			logs << "-------MaxsuPoise Stagger Result-------" << std::endl;
+			logs << "-------MaxsuPoise Weapon Stagger Result-------" << std::endl;
+
+			if (staggerProtectTime > 0.f)
+				logs << "Largest Stagger! TotalHealth: " << totalPoiseHealth << std::endl;
+			else {
+				logs << "TotalHealth: " << totalPoiseHealth << std::endl;
+				logs << "Damage: " << poiseDamage << std::endl;
+				logs << "CurrentHealth: " << currentPoiseHealth << std::endl;
+				logs << "StaggerLevel: " << staggerLevel << std::endl;
+				logs << "ImmuneLevel: " << immuneLevel << std::endl;
+			}
+
+			logs << "---------------------------------------" << std::endl;
+			CPrint(logs.str().c_str());
+		}
+	}
+
+	void StaggerHandler::ProcessMagicStagger(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
+	{
+		if (!a_target)
+			return;
+
+		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(a_target);
+		if (staggerProtectTime > 0.f && a_target->IsStaggering())
+			return;
+
+		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(a_target);
+		auto currentPoiseHealth = PoiseHealthHandler::GetCurrentPoiseHealth(a_target);
+		auto poiseDamage = PoiseDamageCalculator::GetMagicPoiseDamage(a_target, a_staggerMult, a_aggressor);
+		currentPoiseHealth -= poiseDamage;
+
+		auto staggerLevel = GetStaggerLevel(poiseDamage / totalPoiseHealth);
+		auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(a_target);
+		if (currentPoiseHealth <= 0.f) {
+			TryStagger(a_target, 1.0f, a_aggressor);
+			if (a_target->IsStaggering()) {
+				staggerProtectTime = StaggerProtectHandler::GetMaxStaggerProtectTime();
+				StaggerProtectHandler::SetStaggerProtectTimer(a_target, staggerProtectTime);
+				currentPoiseHealth = totalPoiseHealth;
+			}
+		} else if (staggerProtectTime <= 0.f) {
+			if (staggerLevel && staggerLevel > immuneLevel) {
+				TryStagger(a_target, 0.25f * (staggerLevel) + 0.01f, a_aggressor);
+			}
+		}
+
+		PoiseHealthHandler::SetCurrentPoiseHealth(a_target, currentPoiseHealth);
+		RegenDelayHandler::SetPoiseRegenDelayTimer(a_target, RegenDelayHandler::GetMaxRegenDelayTime());
+
+		auto selectedRef = RE::Console::GetSelectedRef();
+		if (selectedRef && a_target == selectedRef.get()) {
+			std::ostringstream logs;
+			logs << "-------MaxsuPoise Magic Stagger Result-------" << std::endl;
 
 			if (staggerProtectTime > 0.f)
 				logs << "Largest Stagger! TotalHealth: " << totalPoiseHealth << std::endl;

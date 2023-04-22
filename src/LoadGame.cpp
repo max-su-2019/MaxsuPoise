@@ -1,5 +1,6 @@
 #include "LoadGame.h"
 #include "Hooks/HitEventHandler.h"
+#include "Hooks/MagicStaggerHook.h"
 #include "Hooks/PerkEntry_Hooks.h"
 #include "Hooks/PoiseRegenHandler.h"
 #include "SettingsHandler.h"
@@ -11,6 +12,7 @@ namespace MaxsuPoise
 		if (msg->type == SKSE::MessagingInterface::kPostPostLoad) {
 			MaxsuPoise::SettingsHandler::Register();
 			MaxsuPoise::HitEventHandler::InstallHooks();
+			MaxsuPoise::MagicStaggerHook::InstallHooks();
 			MaxsuPoise::PoiseRegenHandler::CharacterEx::InstallHook();
 			MaxsuPoise::PoiseRegenHandler::PlayerEx::InstallHook();
 			MaxsuPoise::PerkEntryHook::Install();
