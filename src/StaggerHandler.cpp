@@ -24,7 +24,7 @@ namespace MaxsuPoise
 			return;
 
 		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(target);
-		if (staggerProtectTime > 0.f && IsStaggerAccurateCheck(target))
+		if (staggerProtectTime > 0.f && target->IsStaggering())
 			return;
 
 		auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(target);
@@ -36,7 +36,7 @@ namespace MaxsuPoise
 		auto immuneLevel = ImmuneLevelCalculator::GetTotalImmuneLevel(target);
 		if (currentPoiseHealth <= 0.f) {
 			TryStagger(target, 1.0f, aggressor);
-			if (IsStaggerAccurateCheck(target)) {
+			if (target->IsStaggering()) {
 				staggerProtectTime = StaggerProtectHandler::GetMaxStaggerProtectTime();
 				StaggerProtectHandler::SetStaggerProtectTimer(target, staggerProtectTime);
 				currentPoiseHealth = totalPoiseHealth;
@@ -72,7 +72,7 @@ namespace MaxsuPoise
 
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
 	{
-		float damageTHLD_Arr[StaggerLevel::kLargest] = {
+		static float damageTHLD_Arr[StaggerLevel::kLargest] = {
 			GetGameSettingFloat("fMaxsuPoise_SmallStaggerTHLD", 0.17f),
 			GetGameSettingFloat("fMaxsuPoise_MediumStaggerTHLD", 0.25f),
 			GetGameSettingFloat("fMaxsuPoise_LargeStaggerTHLD", 0.5f),
@@ -85,5 +85,32 @@ namespace MaxsuPoise
 		}
 
 		return StaggerLevel::kLargest;
+	}
+
+	StaggerLevel ImmuneLevelCalculator::GetTotalImmuneLevel(RE::Actor* a_target)
+	{
+		static std::map<std::string, StaggerLevel> ImmuneKeywordMap = {
+			{ "MaxsuPoise_ImmuneSmall", StaggerLevel::kSmall },
+			{ "MaxsuPoise_ImmuneMedium", StaggerLevel::kMedium },
+			{ "MaxsuPoise_ImmuneLarge", StaggerLevel::kLarge },
+			{ "MaxsuPoise_ImmuneLargest", StaggerLevel::kLargest }
+		};
+
+		auto result = StaggerLevel::kNone;
+		if (!a_target)
+			return result;
+
+		for (auto& pair : ImmuneKeywordMap) {
+			auto keyword = RE::TESForm::LookupByEditorID<RE::BGSKeyword>(pair.first);
+			if (!keyword)
+				continue;
+
+			if (a_target->HasKeyword(keyword) || a_target->HasMagicEffectWithKeyword(keyword)) {
+				if (pair.second > result)
+					result = pair.second;
+			}
+		}
+
+		return result;
 	}
 }

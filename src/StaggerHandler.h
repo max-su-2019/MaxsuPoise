@@ -27,10 +27,7 @@ namespace MaxsuPoise
 	class ImmuneLevelCalculator
 	{
 	public:
-		static StaggerLevel GetTotalImmuneLevel(RE::Actor* a_target)
-		{
-			return StaggerLevel::kNone;
-		}
+		static StaggerLevel GetTotalImmuneLevel(RE::Actor* a_target);
 
 	private:
 		ImmuneLevelCalculator() = delete;

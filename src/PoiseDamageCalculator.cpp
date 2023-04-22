@@ -43,13 +43,10 @@ namespace MaxsuPoise
 		if (a_weapon->HasKeywordString("MaxsuPoise_UniqueWeapStagger"))
 			return a_weapon->GetStagger();
 
-		auto settingsHandler = SettingsHandler::GetSingleton();
-		if (settingsHandler) {
-			auto weapType = a_weapon->GetWeaponType();
-			auto item = settingsHandler->WeapTypeMultMap.find(weapType);
-			if (item != settingsHandler->WeapTypeMultMap.end()) {
-				return item->second;
-			}
+		auto weapType = a_weapon->GetWeaponType();
+		auto item = SettingsHandler::WeapTypeMultMap.find(weapType);
+		if (item != SettingsHandler::WeapTypeMultMap.end()) {
+			return item->second;
 		}
 
 		return 0.0f;

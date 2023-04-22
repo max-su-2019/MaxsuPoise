@@ -49,8 +49,4 @@ namespace MaxsuPoise
 		return func(entry, actor_a, actor_b, out);
 	}
 
-	bool IsStaggerAccurateCheck(RE::Actor* a_target)
-	{
-		return a_target->IsStaggering() || a_target->IsStaggered();
-	}
 }
