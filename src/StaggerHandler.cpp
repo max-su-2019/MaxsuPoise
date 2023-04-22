@@ -1,7 +1,7 @@
 #include "StaggerHandler.h"
+#include "Hooks/PoiseRegenHandler.h"
 #include "PoiseDamageCalculator.h"
 #include "PoiseHealthHandler.h"
-#include "PoiseRegenHandler.h"
 #include "Utils.h"
 
 namespace MaxsuPoise

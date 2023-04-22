@@ -1,7 +1,7 @@
 #include "LoadGame.h"
-#include "HitEventHandler.h"
-#include "PerkEntry_Hooks.h"
-#include "PoiseRegenHandler.h"
+#include "Hooks/HitEventHandler.h"
+#include "Hooks/PerkEntry_Hooks.h"
+#include "Hooks/PoiseRegenHandler.h"
 #include "SettingsHandler.h"
 
 namespace MaxsuPoise
