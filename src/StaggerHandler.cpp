@@ -131,7 +131,7 @@ namespace MaxsuPoise
 
 	StaggerLevel StaggerHandler::GetStaggerLevel(const float& a_DamagePercent)
 	{
-		static float damageTHLD_Arr[StaggerLevel::kLargest] = {
+		float damageTHLD_Arr[StaggerLevel::kLargest] = {
 			GetGameSettingFloat("fMaxsuPoise_SmallStaggerTHLD", 0.17f),
 			GetGameSettingFloat("fMaxsuPoise_MediumStaggerTHLD", 0.25f),
 			GetGameSettingFloat("fMaxsuPoise_LargeStaggerTHLD", 0.5f),
