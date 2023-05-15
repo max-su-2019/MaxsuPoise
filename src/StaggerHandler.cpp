@@ -8,6 +8,13 @@ namespace MaxsuPoise
 {
 	static inline void TryStagger(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
 	{
+		if (a_target->IsStaggering()) {
+			float currentStaggerMagnitude = 0.f;
+			if (a_target->GetGraphVariableFloat("StaggerMagnitude", currentStaggerMagnitude) && currentStaggerMagnitude - a_staggerMult >= 0.1f) {
+				return;
+			}
+		}
+
 		using func_t = decltype(&TryStagger);
 		REL::Relocation<func_t> func{ REL::RelocationID(36700, 37710) };
 		func(a_target, a_staggerMult, a_aggressor);
@@ -141,13 +148,6 @@ namespace MaxsuPoise
 
 	StaggerLevel ImmuneLevelCalculator::GetTotalImmuneLevel(RE::Actor* a_target)
 	{
-		static std::map<std::string, StaggerLevel> ImmuneKeywordMap = {
-			{ "MaxsuPoise_ImmuneSmall", StaggerLevel::kSmall },
-			{ "MaxsuPoise_ImmuneMedium", StaggerLevel::kMedium },
-			{ "MaxsuPoise_ImmuneLarge", StaggerLevel::kLarge },
-			{ "MaxsuPoise_ImmuneLargest", StaggerLevel::kLargest }
-		};
-
 		auto result = StaggerLevel::kNone;
 		if (!a_target)
 			return result;
@@ -157,12 +157,22 @@ namespace MaxsuPoise
 			if (!keyword)
 				continue;
 
-			if (a_target->HasKeyword(keyword) || a_target->HasMagicEffectWithKeyword(keyword)) {
+			if (a_target->HasKeyword(keyword) || HasActiveEffectWithKeyword(a_target, keyword)) {
 				if (pair.second > result)
 					result = pair.second;
 			}
 		}
 
 		return result;
+	}
+
+	bool ImmuneLevelCalculator::HasActiveEffectWithKeyword(RE::MagicTarget* a_target, RE::BGSKeyword* a_keyword)
+	{
+		for (const auto effect : *(a_target->GetActiveEffectList())) {
+			if (effect->GetBaseObject()->HasKeyword(a_keyword) && (effect->conditionStatus.get() == RE::ActiveEffect::ConditionStatus::kTrue))
+				return true;
+		}
+
+		return false;
 	}
 }

@@ -29,10 +29,18 @@ namespace MaxsuPoise
 	{
 	public:
 		static StaggerLevel GetTotalImmuneLevel(RE::Actor* a_target);
+		static bool HasActiveEffectWithKeyword(RE::MagicTarget* a_target, RE::BGSKeyword* a_keyword);
 
 	private:
 		ImmuneLevelCalculator() = delete;
 
 		~ImmuneLevelCalculator() = delete;
+
+		static inline std::map<std::string, StaggerLevel> ImmuneKeywordMap = {
+			{ "MaxsuPoise_ImmuneSmall", StaggerLevel::kSmall },
+			{ "MaxsuPoise_ImmuneMedium", StaggerLevel::kMedium },
+			{ "MaxsuPoise_ImmuneLarge", StaggerLevel::kLarge },
+			{ "MaxsuPoise_ImmuneLargest", StaggerLevel::kLargest }
+		};
 	};
 }

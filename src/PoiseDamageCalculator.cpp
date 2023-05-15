@@ -12,9 +12,10 @@ namespace MaxsuPoise
 			return result;
 
 		auto aggressor = a_hitData->aggressor ? a_hitData->aggressor.get().get() : nullptr;
+		auto sourceProjectile = a_hitData->sourceRef ? a_hitData->sourceRef.get().get()->AsProjectile() : nullptr;
 
 		float baseWeapDamage = GetBaseWeaponPoiseDamage();
-		float weapDamageMult = GetWeaponDamageMult(a_hitData->weapon);
+		float weapDamageMult = sourceProjectile ? GetWeaponDamageMult(sourceProjectile->weaponSource) : GetWeaponDamageMult(a_hitData->weapon);
 		float animDamageMult = aggressor ? GetAnimationDamageMult(aggressor) : 0.f;
 		float attackDataMult = GetAttackDataDamageMult(a_hitData->attackData.get());
 		float ModTargetStagger = GetPerkModTargetStagger(aggressor, target);
@@ -22,7 +23,7 @@ namespace MaxsuPoise
 		float StrengthMult = GetStrengthMult(aggressor, target);
 		float BlockingMult = GetBlockingMult(a_hitData);
 
-		result = baseWeapDamage * (weapDamageMult + StrengthMult) * (1 + animDamageMult + attackDataMult) * ModTargetStagger * ModIncomingStagger;
+		result = baseWeapDamage * (weapDamageMult + StrengthMult + attackDataMult) * (1 + animDamageMult) * ModTargetStagger * ModIncomingStagger;
 		if (a_hitData->flags.any(RE::HitData::Flag::kBlocked)) {
 			result *= BlockingMult;
 		}
