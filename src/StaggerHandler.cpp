@@ -8,7 +8,8 @@ namespace MaxsuPoise
 {
 	static inline void TryStagger(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
 	{
-		if (a_target->IsStaggering()) {
+		std::int32_t staggerLevelGV = 0;
+		if (a_target->IsStaggering() && !a_target->GetGraphVariableInt("MSL_StaggerLevel", staggerLevelGV)) {
 			float currentStaggerMagnitude = 0.f;
 			if (a_target->GetGraphVariableFloat("StaggerMagnitude", currentStaggerMagnitude) && currentStaggerMagnitude - a_staggerMult >= 0.1f) {
 				return;

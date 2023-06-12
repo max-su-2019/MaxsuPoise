@@ -5,8 +5,6 @@ namespace MaxsuPoise
 {
 	static constexpr char FileName[] = R"(Data\SKSE\Plugins\MaxsuPoise.ini)";
 
-	static DKUtil::model::enumeration<WEAPON_TYPE, std::uint32_t> WeapTypeEnumTbl;
-
 	bool SettingsHandler::Register()
 	{
 		UpdateWeapTypeMult();
@@ -27,6 +25,8 @@ namespace MaxsuPoise
 
 	void SettingsHandler::UpdateWeapTypeMult()
 	{
+		auto& WeapTypeEnumTbl = dku::static_enum<WEAPON_TYPE>();
+
 		CSimpleIniA ini;
 		ini.LoadFile(FileName);  // Load the ini file
 
