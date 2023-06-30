@@ -13,7 +13,7 @@ namespace MaxsuPoise
 	protected:
 		struct Hooks
 		{
-			struct ProcessHitEvent
+			struct ProcessStagger
 			{
 				static void thunk(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor);
 
@@ -22,7 +22,7 @@ namespace MaxsuPoise
 
 			static void Install()
 			{
-				stl::write_thunk_call<ProcessHitEvent>(REL::ID(34188).address() + 0x6F);  // 1.5.97 140563460
+				stl::write_thunk_call<ProcessStagger>(REL::ID(34188).address() + 0x6F);  // 1.5.97 140563460
 			}
 		};
 

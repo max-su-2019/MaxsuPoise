@@ -14,7 +14,7 @@ namespace MaxsuPoise
 		auto aggressor = a_hitData->aggressor ? a_hitData->aggressor.get().get() : nullptr;
 		auto sourceProjectile = a_hitData->sourceRef ? a_hitData->sourceRef.get().get()->AsProjectile() : nullptr;
 
-		float baseWeapDamage = GetBaseWeaponPoiseDamage();
+		float baseWeapDamage = sourceProjectile ? GetBaseRangePoiseDamage() : GetBaseMeleePoiseDamage();
 		float weapDamageMult = sourceProjectile ? GetWeaponDamageMult(sourceProjectile->weaponSource) : GetWeaponDamageMult(a_hitData->weapon);
 		float animDamageMult = aggressor ? GetAnimationDamageMult(aggressor) : 0.f;
 		float attackDataMult = GetAttackDataDamageMult(a_hitData->attackData.get());
@@ -31,9 +31,14 @@ namespace MaxsuPoise
 		return result;
 	}
 
-	float PoiseDamageCalculator::GetBaseWeaponPoiseDamage()
+	float PoiseDamageCalculator::GetBaseMeleePoiseDamage()
 	{
-		return GetGameSettingFloat("fMaxsuPoise_BaseWeaponPoiseDamage", 10.0f);
+		return GetGameSettingFloat("fMaxsuPoise_BaseMeleePoiseDamage", 10.5f);
+	}
+
+	float PoiseDamageCalculator::GetBaseRangePoiseDamage()
+	{
+		return GetGameSettingFloat("fMaxsuPoise_BaseRangePoiseDamage", 10.5f);
 	}
 
 	float PoiseDamageCalculator::GetWeaponDamageMult(RE::TESObjectWEAP* a_weapon)

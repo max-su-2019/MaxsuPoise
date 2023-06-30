@@ -4,7 +4,7 @@
 namespace MaxsuPoise
 {
 
-	void MagicStaggerHook::Hooks::ProcessHitEvent::thunk(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
+	void MagicStaggerHook::Hooks::ProcessStagger::thunk(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor)
 	{
 		StaggerHandler::ProcessMagicStagger(a_target, a_staggerMult, a_aggressor);
 	}

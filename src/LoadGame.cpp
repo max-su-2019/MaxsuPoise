@@ -10,6 +10,13 @@ namespace MaxsuPoise
 	void EventCallback(SKSE::MessagingInterface::Message* msg)
 	{
 		if (msg->type == SKSE::MessagingInterface::kPostPostLoad) {
+			static constexpr auto bdiDLLName = "BehaviorDataInjector.dll";
+			auto bdiPlugin = GetModuleHandleA(bdiDLLName);
+			if (!bdiPlugin) {
+				ERROR("Not \"{}\" Loaded!", bdiDLLName);
+				return;
+			}
+
 			MaxsuPoise::SettingsHandler::Register();
 			MaxsuPoise::HitEventHandler::InstallHooks();
 			MaxsuPoise::MagicStaggerHook::InstallHooks();

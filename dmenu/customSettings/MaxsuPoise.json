@@ -1,0 +1,563 @@
+{
+  "data": [
+    {
+      "entries": [
+        {
+          "default": 40.0,
+          "gameSetting": "fMaxsuPoise_BasePoiseHealth",
+          "ini": {
+            "id": "fMaxsuPoise_BasePoiseHealth",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 500.0,
+            "min": 0.0,
+            "step": 0.10000000149011612
+          },
+          "text": {
+            "desc": "Base poi",
+            "name": "BasePoiseHealth"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BasePoiseHealth"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 0.5,
+          "gameSetting": "fMaxsuPoise_HeavyArmorPoiseBonus",
+          "ini": {
+            "id": "fMaxsuPoise_HeavyArmorPoiseBonus",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "Heavy Armor Poise Bonus of the Actor",
+            "name": "HeavyArmorPoiseBonus"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_HeavyArmorPoiseBonus"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 50.0,
+          "gameSetting": "fMaxsuPoise_BaseArmorPoiseHealth",
+          "ini": {
+            "id": "fMaxsuPoise_BaseArmorPoiseHealth",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 500.0,
+            "min": 0.0,
+            "step": 0.10000000149011612
+          },
+          "text": {
+            "desc": "Base Armor Poise Health of the Actor",
+            "name": "BaseArmorPoiseHealth"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BaseArmorPoiseHealth"
+          },
+          "type": "slider"
+        }
+      ],
+      "text": {
+        "desc": "",
+        "name": "PoiseHealthSettings"
+      },
+      "translation": {
+        "desc": "",
+        "name": "t_PoiseHealthSettings"
+      },
+      "type": "group"
+    },
+    {
+      "entries": [
+        {
+          "default": 10.0,
+          "gameSetting": "fMaxsuPoise_BaseMeleePoiseDamage",
+          "ini": {
+            "id": "fMaxsuPoise_BaseMeleePoiseDamage",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.10000000149011612
+          },
+          "text": {
+            "desc": "Base Melee poise damage of the actor.",
+            "name": "BaseMeleePoiseDamage"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BaseMeleePoiseDamage"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 10.0,
+          "gameSetting": "fMaxsuPoise_BaseRangePoiseDamage",
+          "ini": {
+            "id": "fMaxsuPoise_BaseRangePoiseDamage",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.10000000149011612
+          },
+          "text": {
+            "desc": "Base Range poise damage of the actor.",
+            "name": "BaseRangePoiseDamage"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BaseRangePoiseDamage"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 0,
+          "gameSetting": "uMaxsuPoise_BlockedMode",
+          "ini": {
+            "id": "uMaxsuPoise_BlockedMode",
+            "section": "GameSettings"
+          },
+          "options": [ "Percent Blocked", "Fully Blocked" ],
+          "text": {
+            "desc": "",
+            "name": "BlockedMode"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BlockedMode"
+          },
+          "type": "dropdown"
+        },
+        {
+          "default": 50.0,
+          "gameSetting": "fMaxsuPoise_BaseMagicPoiseDamage",
+          "ini": {
+            "id": "fMaxsuPoise_BaseMagicPoiseDamage",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 200.0,
+            "min": 0.0,
+            "step": 0.10000000149011612
+          },
+          "text": {
+            "desc": "Base Magic Poise Damage of the Actor",
+            "name": "BaseMagicPoiseDamage"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_BaseMagicPoiseDamage"
+          },
+          "type": "slider"
+        },
+        {
+          "entries": [
+            {
+              "default": 0.0,
+              "ini": {
+                "id": "kHandToHandMelee",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kHandToHandMelee"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 1.0,
+              "ini": {
+                "id": "kOneHandSword",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kOneHandSword"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 0.5,
+              "ini": {
+                "id": "kOneHandDagger",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kOneHandDagger"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 1.0,
+              "ini": {
+                "id": "kOneHandAxe",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kOneHandAxe"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 1.0,
+              "ini": {
+                "id": "kOneHandMace",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kOneHandMace"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 1.5,
+              "ini": {
+                "id": "kTwoHandSword",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kTwoHandSword"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 1.5,
+              "ini": {
+                "id": "kTwoHandAxe",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kTwoHandAxe"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 0.0,
+              "ini": {
+                "id": "kBow",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kBow"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 0.0,
+              "ini": {
+                "id": "kStaff",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kStaff"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            },
+            {
+              "default": 0.0,
+              "ini": {
+                "id": "kCrossbow",
+                "section": "WeaponTypeMult"
+              },
+              "style": {
+                "max": 10.0,
+                "min": 0.0,
+                "step": 0.01000000149011612
+              },
+              "text": {
+                "desc": "",
+                "name": "kCrossbow"
+              },
+              "translation": {
+                "desc": "",
+                "name": ""
+              },
+              "type": "slider"
+            }
+          ],
+          "text": {
+            "desc": "",
+            "name": "WeaponTypeMult"
+          },
+          "translation": {
+            "desc": "",
+            "name": ""
+          },
+          "type": "group"
+        }
+      ],
+      "text": {
+        "desc": "",
+        "name": "PoiseDamageSettings"
+      },
+      "translation": {
+        "desc": "",
+        "name": "t_PoiseDamageSettings"
+      },
+      "type": "group"
+    },
+    {
+      "entries": [
+        {
+          "default": 0.17000000178813934,
+          "gameSetting": "fMaxsuPoise_SmallStaggerTHLD",
+          "ini": {
+            "id": "fMaxsuPoise_SmallStaggerTHLD",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "SmallStaggerTHLD"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_SmallStaggerTHLD"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 0.25,
+          "gameSetting": "fMaxsuPoise_MediumStaggerTHLD",
+          "ini": {
+            "id": "fMaxsuPoise_MediumStaggerTHLD",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "MediumStaggerTHLD"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_MediumStaggerTHLD"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 0.5,
+          "gameSetting": "fMaxsuPoise_LargeStaggerTHLD",
+          "ini": {
+            "id": "fMaxsuPoise_LargeStaggerTHLD",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "LargeStaggerTHLD"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_LargeStaggerTHLD"
+          },
+          "type": "slider"
+        }
+      ],
+      "text": {
+        "desc": "",
+        "name": "StaggerLevelSettings"
+      },
+      "translation": {
+        "desc": "",
+        "name": "t_StaggerLevelSettings"
+      },
+      "type": "group"
+    },
+    {
+      "entries": [
+        {
+          "default": 0.8500000238418579,
+          "gameSetting": "fMaxsuPoise_StaggerProtectTime",
+          "ini": {
+            "id": "fMaxsuPoise_StaggerProtectTime",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "StaggerProtectTime"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_StaggerProtectTime"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 0.05000000074505806,
+          "gameSetting": "fMaxsuPoise_PoiseRegen",
+          "ini": {
+            "id": "fMaxsuPoise_PoiseRegen",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "PoiseRegen"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_PoiseRegen"
+          },
+          "type": "slider"
+        },
+        {
+          "default": 1.0,
+          "gameSetting": "fMaxsuPoise_RegenDelayTime",
+          "ini": {
+            "id": "fMaxsuPoise_RegenDelayTime",
+            "section": "GameSettings"
+          },
+          "style": {
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.009999999776482582
+          },
+          "text": {
+            "desc": "",
+            "name": "RegenDelayTime"
+          },
+          "translation": {
+            "desc": "",
+            "name": "t_RegenDelayTime"
+          },
+          "type": "slider"
+        }
+      ],
+      "text": {
+        "desc": "",
+        "name": "PoiseRegenSettings"
+      },
+      "translation": {
+        "desc": "",
+        "name": "t_PoiseRegenSettings"
+      },
+      "type": "group"
+    }
+  ],
+  "ini": "Data\\SKSE\\Plugins\\MaxsuPoise.ini",
+  "name": "MaxsuPoise"
+}

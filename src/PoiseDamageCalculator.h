@@ -9,7 +9,8 @@ namespace MaxsuPoise
 		static float GetMagicPoiseDamage(RE::Actor* a_target, float a_staggerMult, RE::Actor* a_aggressor);
 
 	private:
-		static float GetBaseWeaponPoiseDamage();
+		static float GetBaseMeleePoiseDamage();
+		static float GetBaseRangePoiseDamage();
 		static float GetWeaponDamageMult(RE::TESObjectWEAP* a_weapon);
 		static float GetAnimationDamageMult(RE::Actor* a_aggressor);
 		static float GetAttackDataDamageMult(RE::BGSAttackData* a_attackData);
