@@ -8,6 +8,7 @@ namespace MaxsuPoise
 	bool SettingsHandler::Register()
 	{
 		UpdateWeapTypeMult();
+		InitArmorSlotMult();
 
 		static SettingsHandler singleton;
 		auto eventSource = SKSE::GetModCallbackEventSource();
@@ -39,7 +40,28 @@ namespace MaxsuPoise
 			const char* value = it->second;
 			auto weapEnum = WeapTypeEnumTbl.from_string(key);
 			if (weapEnum.has_value()) {
-				SettingsHandler::WeapTypeMultMap[weapEnum.value()] = (std::stof(value));
+				weapTypeMultMap[weapEnum.value()] = (std::stof(value));
+			}
+		}
+	}
+
+	void SettingsHandler::InitArmorSlotMult()
+	{
+		auto& BipeSlotEnumTbl = dku::static_enum<BipedSlot>();
+
+		CSimpleIniA ini;
+		ini.LoadFile(FileName);  // Load the ini file
+
+		// get a pointer to the "ArmorSlotMult" section
+		const CSimpleIniA::TKeyVal* section = ini.GetSection("ArmorSlotMult");
+
+		// iterate through the key-value pairs in the section
+		for (CSimpleIniA::TKeyVal::const_iterator it = section->begin(); it != section->end(); ++it) {
+			const char* key = it->first.pItem;
+			const char* value = it->second;
+			auto armorSlotEnum = BipeSlotEnumTbl.from_string(key);
+			if (armorSlotEnum.has_value()) {
+				armorSlotMultMap[armorSlotEnum.value()] = (std::stof(value));
 			}
 		}
 	}

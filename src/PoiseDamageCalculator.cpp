@@ -50,8 +50,8 @@ namespace MaxsuPoise
 			return a_weapon->GetStagger();
 
 		auto weapType = a_weapon->GetWeaponType();
-		auto item = SettingsHandler::WeapTypeMultMap.find(weapType);
-		if (item != SettingsHandler::WeapTypeMultMap.end()) {
+		auto item = SettingsHandler::weapTypeMultMap.find(weapType);
+		if (item != SettingsHandler::weapTypeMultMap.end()) {
 			return item->second;
 		}
 

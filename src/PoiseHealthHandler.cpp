@@ -1,4 +1,5 @@
 #include "PoiseHealthHandler.h"
+#include "SettingsHandler.h"
 #include "Utils.h"
 
 namespace MaxsuPoise
@@ -41,22 +42,19 @@ namespace MaxsuPoise
 		if (!a_target)
 			return result;
 
-		using BipedSlot = RE::BipedObjectSlot;
-		static BipedSlot armorSlots[] = {
-			BipedSlot::kBody
-		};
-
 		auto baseArmorPoiseHealth = GetBaseArmorPoiseHealth();
 		auto heavyArmorBouns = GetHeavyArmorBouns();
 
-		for (const auto& slot : armorSlots) {
+		for (const auto& pair : SettingsHandler::armorSlotMultMap) {
+			auto slot = pair.first;
 			auto armor = a_target->GetWornArmor(slot);
+			auto armorHealth = baseArmorPoiseHealth * pair.second;
 			if (armor && (armor->IsLightArmor() || armor->IsHeavyArmor())) {
-				result += armor->IsLightArmor() ? baseArmorPoiseHealth : baseArmorPoiseHealth * (1 + heavyArmorBouns);
+				result += armor->IsLightArmor() ? armorHealth : armorHealth * (1 + heavyArmorBouns);
 			} else {
 				armor = a_target->GetSkin(slot);
 				if (armor && (armor->IsLightArmor() || armor->IsHeavyArmor()))
-					result += armor->IsLightArmor() ? baseArmorPoiseHealth : baseArmorPoiseHealth * (1 + heavyArmorBouns);
+					result += armor->IsLightArmor() ? armorHealth : armorHealth * (1 + heavyArmorBouns);
 			}
 		}
 

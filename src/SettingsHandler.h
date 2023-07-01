@@ -4,14 +4,17 @@
 namespace MaxsuPoise
 {
 	using WEAPON_TYPE = RE::WEAPON_TYPE;
+	using BipedSlot = RE::BipedObjectSlot;
 	using EventResult = RE::BSEventNotifyControl;
 
 	class SettingsHandler : public RE::BSTEventSink<SKSE::ModCallbackEvent>
 	{
 	public:
-		static inline std::map<WEAPON_TYPE, float> WeapTypeMultMap;
-		static bool Register();
+		static inline std::map<WEAPON_TYPE, float> weapTypeMultMap;
+		static inline std::map<BipedSlot, float> armorSlotMultMap;
+
 		static constexpr char modName[] = "MaxsuPoise";
+		static bool Register();
 
 		virtual EventResult ProcessEvent(const SKSE::ModCallbackEvent* a_event, RE::BSTEventSource<SKSE::ModCallbackEvent>* a_eventSource)
 		{
@@ -26,6 +29,7 @@ namespace MaxsuPoise
 		SettingsHandler() = default;
 
 		static void UpdateWeapTypeMult();
+		static void InitArmorSlotMult();
 	};
 
 }
