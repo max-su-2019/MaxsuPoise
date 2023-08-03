@@ -49,4 +49,16 @@ namespace MaxsuPoise
 		return func(entry, actor_a, actor_b, out);
 	}
 
+	RE::hkbClipGenerator* ToClipGenerator(RE::hkbNode* a_node)
+	{
+		constexpr char CLASS_NAME[] = "hkbClipGenerator";
+
+		if (a_node && a_node->GetClassType()) {
+			if (_strcmpi(a_node->GetClassType()->name, CLASS_NAME) == 0)
+				return skyrim_cast<RE::hkbClipGenerator*>(a_node);
+		}
+
+		return nullptr;
+	}
+
 }

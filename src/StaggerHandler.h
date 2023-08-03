@@ -36,6 +36,9 @@ namespace MaxsuPoise
 
 		~ImmuneLevelCalculator() = delete;
 
+		static StaggerLevel GetAnimImmuneLevel(RE::Actor* a_target);
+		static StaggerLevel GetAnimImmuneLevel(RE::hkbClipGenerator* a_clip);
+
 		static inline std::map<std::string, StaggerLevel> ImmuneKeywordMap = {
 			{ "MaxsuPoise_ImmuneSmall", StaggerLevel::kSmall },
 			{ "MaxsuPoise_ImmuneMedium", StaggerLevel::kMedium },

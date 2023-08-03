@@ -164,6 +164,11 @@ namespace MaxsuPoise
 			}
 		}
 
+		auto animImmuneLevel = GetAnimImmuneLevel(a_target);
+		if (animImmuneLevel > result) {
+			result = animImmuneLevel;
+		}
+
 		return result;
 	}
 
@@ -175,5 +180,70 @@ namespace MaxsuPoise
 		}
 
 		return false;
+	}
+
+	StaggerLevel ImmuneLevelCalculator::GetAnimImmuneLevel(RE::Actor* a_actor)
+	{
+		StaggerLevel result = StaggerLevel::kNone;
+
+		if (!a_actor || !a_actor->Is3DLoaded())
+			return result;
+
+		RE::BSAnimationGraphManagerPtr graphMgr;
+		if (a_actor->GetAnimationGraphManager(graphMgr) && graphMgr) {
+			auto behaviourGraph = graphMgr->graphs[0] ? graphMgr->graphs[0]->behaviorGraph : nullptr;
+			auto activeNodes = behaviourGraph ? behaviourGraph->activeNodes : nullptr;
+			if (activeNodes) {
+				for (auto nodeInfo : *activeNodes) {
+					auto nodeClone = nodeInfo.nodeClone;
+					if (nodeClone && nodeClone->GetClassType()) {
+						auto clipGenrator = ToClipGenerator(nodeClone);
+						if (clipGenrator) {
+							auto immuneLevel = GetAnimImmuneLevel(clipGenrator);
+							if (immuneLevel > result) {
+								result = immuneLevel;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	StaggerLevel ImmuneLevelCalculator::GetAnimImmuneLevel(RE::hkbClipGenerator* a_clip)
+	{
+		StaggerLevel result = StaggerLevel::kNone;
+
+		if (!a_clip)
+			return result;
+
+		static constexpr std::string_view prefix = "MaxsuPoise";
+
+		auto binding = a_clip ? a_clip->binding : nullptr;
+		auto animation = binding ? binding->animation : nullptr;
+
+		if (!animation || animation->annotationTracks.empty())
+			return result;
+
+		for (auto anno : animation->annotationTracks[0].annotations) {
+			std::string_view text{ anno.text.c_str() };
+			if (text.starts_with(prefix)) {
+				try {
+					auto j = json::parse(text.substr(prefix.size()));
+					auto annoInfo = j.get<AnnoInfo>();
+					annoInfo.startTime = anno.time;
+					if (annoInfo.IsInFrames(a_clip->localTime) && annoInfo.immuneLevel > result) {
+						result = annoInfo.immuneLevel;
+					}
+				} catch (json::exception& ex) {
+					ERROR("Caught an expection when convert annoation: {}", ex.what());
+					continue;
+				}
+			}
+		}
+
+		return result;
 	}
 }
