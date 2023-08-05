@@ -93,7 +93,7 @@ If the hit is blocked, then `PoiseDamage *= BlockingMult`
 They represent the four levels of stagger the hit target would be immune to. Immunity keywords can be added directly to the actor or by casting a magic effect with the corresponding keyword on the actor.
 If there are multiple Immune keywords at the same time, the keyword with the highest Immune level will be used as the final value.
 
-1. **AnimationImmuneLevel**: Immune Level that read from the current activated animation annotations of the hit target.
+2. **AnimationImmuneLevel**: Immune Level that read from the current activated animation annotations of the hit target.
 
 ### Formula:
 
