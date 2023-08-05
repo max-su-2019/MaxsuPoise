@@ -45,7 +45,7 @@ TotalPoiseHealth = BasePoiseHealth * BaseMass * Scale + WornLightArmorNums * Lig
 1. **BaseMeleePoiseDamage**: Global value that defined in "MaxsuPoise.ini", represents the base melee poise damage of the attacker cause to the hit target.
 
 2. **BaseRangePoiseDamage**: Global value that defined in "MaxsuPoise.ini", represents the base range poise damage of the attacker cause to the hit target.
-3. **WeaponDamageMult**: If the weapon form has keyword named _MaxsuPoise_UniqueWeapStagger_, read the stagger ratio in the weapon form. If the keyword not existed, read the value that defined in "MaxsuPoise.ini".
+3. **WeaponDamageMult**: If the weapon form has keyword named _MaxsuPoise_UniqueWeapStagger_, read from the stagger ratio defined inside the weapon form. If the keyword not existed, read from the value that defined in "MaxsuPoise.ini".
 4. **AnimationDamageMult**: Poise damage mult ratio that read from the attack animation annotations of the attacker.
 5. **AttackDataStagger**: Poise damage mult ratio that read from the current attack data stagger value of the attacker.
 6. **BaseMagicPoiseDamage**: Global value that defined in "MaxsuPoise.ini", represents the base magic effect poise damage of the attacker cause to the hit target. **Only the magic effect with stagger archetype could deal poise damage thus stagger the hit target!**
