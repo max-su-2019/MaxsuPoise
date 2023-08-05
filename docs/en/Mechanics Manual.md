@@ -1,5 +1,16 @@
 # MaxsuPoise Mechanics Manual
 
+This document would introduce you details about the mechanics of MaxsuPosie.
+
+## Table of contents
+
+- [**Calculating Total Poise Health**](#Calculating-Total-Poise-Health)
+- [**Calculating Poise Damage**](#Calculating-Poise-Damage)
+- [**Calculating Total Immune Level**](#Calculating-Total-Immune-Level)
+- [**Trigger Stagger**](#Trigger-Stagger)
+- [**Poise Health Regen**](#Poise-Health-Regen)
+- [**Infinite StaggerLock Prevention**](#Infinite-StaggerLock-Prevention)
+
 <br/>
 
 ## Calculating Total Poise Health
@@ -72,7 +83,7 @@ If the hit is blocked, then `PoiseDamage *= BlockingMult`
 
 ### List of Variables:
 
-1. **KeywordImmuneLevel**：The hit target's immunity to different levels of stagger is set through special keywords:
+1. **KeywordImmuneLevel**：The hit target`s immunity to different levels of stagger is set through special keywords:
 
    - MaxsuPoise_ImmuneSmall
    - MaxsuPoise_ImmuneMedium
@@ -100,14 +111,27 @@ Get the maximum value between KeywordImmuneLevel and AnimationImmuneLevel.
 
 ### List of Variables:
 
-1. **TotalPoiseHealth**：受击者的总韧性生命值,具体计算方式看上文
+1. **TotalPoiseHealth**：See the above for the specific calculation method.
 
-2. **CurrentPoiseHealth**: 通过 BDI 注入的 graphVairbaleFloat 值，表示受击者当前剩余的韧性生命值
-3. **PoiseDamage**: 攻击者单次攻击造成的韧性伤害具体计算方式看上文
-4. **SmallStaggerTHLD**: MaxsuPoise.ini 上设置的全局统一数值，表示受击者触发小硬直动画的阈值
-5. **MediumStaggerTHLD**: MaxsuPoise.ini 上设置的全局统一数值，表示受击者触发中硬直动画的阈值
-6. **LargeStaggerTHLD**: MaxsuPoise.ini 上设置的全局统一数值，表示受击者触发大硬直动画的阈值
-7. **TotalImmuneLevel**: 受击者所能免疫硬直动画的等级，具体计算方式看上文
+2. **CurrentPoiseHealth**: A graphVairbaleFloat value injected through BDI, indicating the current remaining poise health of the hit target.
+3. **PoiseDamage**: See the above for the specific calculation method.
+4. **SmallStaggerTHLD**: Global value that defined in "MaxsuPoise.ini", represents the threshold of the poise damage that could drive the hit target trigger small stagger.
+5. **MediumStaggerTHLD**: Global value that defined in "MaxsuPoise.ini", represents the threshold of the poise damage that could drive the hit target trigger medium stagger.
+6. **LargeStaggerTHLD**: Global value that defined in "MaxsuPoise.ini", represents the threshold of the poise damage that could drive the hit target trigger large stagger.
+7. **TotalImmuneLevel**: See the above for the specific calculation method.
+
+### Stagger Trigger Mechanics:
+
+1. The inital value of the _CurrentPoiseHealth_ for a hit target is equal to it _TotalPoiseHealth_.
+
+2. Once the hit target receive damage from the attacker within an attack:  
+   `CurrentPoiseHealth -= PoiseDamage`
+3. If `CurrentPoiseHealth <= 0`, largest level of stagger animation would be triggered on the hit target.
+4. If `CurrentPoiseHealth > 0`, calculating the result of `PoiseDamage / TotalPoiseHealth`:
+   - If `result < SmallStaggerTHLD`，Not stagger animation would be triggered.
+   - If `SmallStaggerTHLD <= result < MediumStaggerTHLD` and `TotalImmuneLevel < 1`, small level of stagger animation would be triggered on the hit target.
+   - If `MediumStaggerTHLD <= result < LargeStaggerTHLD` and `TotalImmuneLevel < 2`, medium level of stagger animation would be triggered on the hit target.
+   - If `result >= LargeStaggerTHLD` and `TotalImmuneLevel < 3`, large level of stagger animation would be triggered on the hit target.
 
 ---
 
@@ -115,11 +139,33 @@ Get the maximum value between KeywordImmuneLevel and AnimationImmuneLevel.
 
 ## Poise Health Regen
 
+### List of Variables:
+
+1. **PoiseRegen**: Global value that defined in "MaxsuPoise.ini", represents the poise health regen ratio of the hit target.
+
+### Implement Methods:
+
+1. If `0 < CurrentPoiseHealth < TotalPoiseHealth`，for each second: `CurrentPoiseHealth += PoiseRegen`
+2. If `CurrentPoiseHealth > TotalPoiseHealth` then `CurrentPoiseHealth = TotalPoiseHealth`
+3. If `CurrentPoiseHealth <= 0`,
+   - If hit stagger is staggering, Immune to any Poise Damage and stagger.
+   - If hit stagger is not staggering，`currentPoiseHealth = TotalPoiseHealth`
+
 ---
 
 <br/>
 
 ## Infinite StaggerLock Prevention
+
+### List of Variables:
+
+1. **StaggerProtectTime**: Global value that defined in "MaxsuPoise.ini", represents the stagger protect time after the hit target recovered from largest stagger state.
+
+### Implement Methods:
+
+- When `CurrentPoiseHealth <= 0` and the hit target is playing largest stagger animation，the actor would Immune to any Poise Damage and stagger.
+
+- After the hit target recovered from largest stagger state, he will gained a stagger protect effect equivalents to `TotalImmuneLevel = 3`, the effect would lasting until StaggerProtectTime end.
 
 ---
 
