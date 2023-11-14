@@ -3,7 +3,7 @@
 
 namespace MaxsuPoise
 {
-	static constexpr char FileName[] = R"(Data\SKSE\Plugins\MaxsuPoise.ini)";
+	static constexpr char fileName[] = R"(Data\SKSE\Plugins\MaxsuPoise.ini)";
 
 	bool SettingsHandler::Register()
 	{
@@ -29,7 +29,7 @@ namespace MaxsuPoise
 		auto& WeapTypeEnumTbl = dku::static_enum<WEAPON_TYPE>();
 
 		CSimpleIniA ini;
-		ini.LoadFile(FileName);  // Load the ini file
+		ini.LoadFile(fileName);  // Load the ini file
 
 		// get a pointer to the "WeaponTypeMult" section
 		const CSimpleIniA::TKeyVal* section = ini.GetSection("WeaponTypeMult");
@@ -47,10 +47,12 @@ namespace MaxsuPoise
 
 	void SettingsHandler::InitArmorSlotMult()
 	{
+		static constexpr char armorSlotFile[] = R"(Data\SKSE\Plugins\MaxsuPoise_ArmorSlot.ini)";
+
 		auto& BipeSlotEnumTbl = dku::static_enum<BipedSlot>();
 
 		CSimpleIniA ini;
-		ini.LoadFile(FileName);  // Load the ini file
+		ini.LoadFile(armorSlotFile);  // Load the ini file
 
 		// get a pointer to the "ArmorSlotMult" section
 		const CSimpleIniA::TKeyVal* section = ini.GetSection("ArmorSlotMult");
