@@ -83,6 +83,10 @@ namespace MaxsuPoise
 		if (!a_target)
 			return;
 
+		if (a_staggerMult <= 0.f) {
+			return;
+		}
+
 		if (a_target == a_aggressor)
 			a_aggressor = nullptr;
 
