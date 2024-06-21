@@ -27,8 +27,8 @@ namespace MaxsuPoise
 	{
 		if (!a_target || !a_target->race)
 			return 0.f;
-
-		return a_target->race->data.baseMass;
+		
+		return a_target->GetActorValue(RE::ActorValue::kMass);
 	}
 
 	void CPrint(const char* a_fmt, ...)

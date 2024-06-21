@@ -29,10 +29,14 @@ namespace MaxsuPoise
 		auto& WeapTypeEnumTbl = dku::static_enum<WEAPON_TYPE>();
 
 		CSimpleIniA ini;
-		ini.LoadFile(fileName);  // Load the ini file
+		if (ini.LoadFile(fileName))  // Load the ini file
+			ERROR("Get Error When loading file {}", fileName);
 
 		// get a pointer to the "WeaponTypeMult" section
 		const CSimpleIniA::TKeyVal* section = ini.GetSection("WeaponTypeMult");
+		if (!section) {
+			return;
+		}
 
 		// iterate through the key-value pairs in the section
 		for (CSimpleIniA::TKeyVal::const_iterator it = section->begin(); it != section->end(); ++it) {
@@ -52,10 +56,14 @@ namespace MaxsuPoise
 		auto& BipeSlotEnumTbl = dku::static_enum<BipedSlot>();
 
 		CSimpleIniA ini;
-		ini.LoadFile(armorSlotFile);  // Load the ini file
+		if (ini.LoadFile(armorSlotFile))  // Load the ini file
+			ERROR("Get Error When loading file {}", armorSlotFile);
 
 		// get a pointer to the "ArmorSlotMult" section
 		const CSimpleIniA::TKeyVal* section = ini.GetSection("ArmorSlotMult");
+		if (!section) {
+			return;
+		}
 
 		// iterate through the key-value pairs in the section
 		for (CSimpleIniA::TKeyVal::const_iterator it = section->begin(); it != section->end(); ++it) {

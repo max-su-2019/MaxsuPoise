@@ -83,6 +83,9 @@ namespace MaxsuPoise
 		if (!a_target)
 			return;
 
+		if (a_target == a_aggressor)
+			a_aggressor = nullptr;
+
 		auto staggerProtectTime = StaggerProtectHandler::GetStaggerProtectTimer(a_target);
 		if (staggerProtectTime > 0.f && a_target->IsStaggering())
 			return;
