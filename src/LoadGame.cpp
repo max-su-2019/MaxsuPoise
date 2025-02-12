@@ -4,6 +4,7 @@
 #include "Hooks/PerkEntry_Hooks.h"
 #include "Hooks/PoiseRegenHandler.h"
 #include "SettingsHandler.h"
+#include "HUD.h"
 
 namespace MaxsuPoise
 {
@@ -23,6 +24,7 @@ namespace MaxsuPoise
 			MaxsuPoise::PoiseRegenHandler::CharacterEx::InstallHook();
 			MaxsuPoise::PoiseRegenHandler::PlayerEx::InstallHook();
 			MaxsuPoise::PerkEntryHook::Install();
+			MaxsuPoise::HUD::GetSingleton().Initialize();
 		}
 	}
 

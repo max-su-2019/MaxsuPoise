@@ -23,6 +23,16 @@ namespace MaxsuPoise
 		return a_default;
 	}
 
+	bool GetGameSettingBool(const std::string a_name, const bool a_default)
+	{
+		auto setting = RE::GameSettingCollection::GetSingleton()->GetSetting(a_name.c_str());
+		if (setting) {
+			return setting->GetBool();
+		}
+
+		return a_default;
+	}
+
 	float GetActorMass(RE::Actor* a_target)
 	{
 		if (!a_target || !a_target->race)

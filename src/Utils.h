@@ -8,6 +8,8 @@ namespace MaxsuPoise
 
 	std::uint32_t GetGameSettingUInt(const std::string a_name, const std::uint32_t a_default);
 
+	bool GetGameSettingBool(const std::string a_name, const bool a_default);
+
 	float GetActorMass(RE::Actor* a_target);
 
 	void CPrint(const char* a_fmt, ...);

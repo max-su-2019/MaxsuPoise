@@ -556,6 +556,58 @@
         "name": "t_PoiseRegenSettings"
       },
       "type": "group"
+    },
+    {
+        "entries": [
+            {
+                "default": true,
+                "gameSetting": "bMaxsuPoise_EnableTrueHUD",
+                "ini": {
+                    "id": "bMaxsuPoise_EnableTrueHUD",
+                    "section": "GameSettings"
+                },
+                "text": {
+                    "desc": "Toggle TrueHUD support. Requires a game restart.",
+                    "name": "EnableTrueHUD"
+                },
+                "translation": {
+                    "desc": "",
+                    "name": "t_EnableTrueHUD"
+                },
+                "type": "checkbox"
+            },
+            {
+                "default": 30.0,
+                "gameSetting": "fMaxsuPoise_BarFlashThreshold",
+                "ini": {
+                    "id": "fMaxsuPoise_BarFlashThreshold",
+                    "section": "GameSettings"
+                },
+                "style": {
+                    "max": 100.0,
+                    "min": 0.0,
+                    "step": 1.0
+                },
+                "text": {
+                    "desc": "Percentage of total poise health to flash the bar",
+                    "name": "BarFlashThreshold"
+                },
+                "translation": {
+                    "desc": "",
+                    "name": "t_BarFlashThreshold"
+                },
+                "type": "slider"
+            }
+        ],
+        "text": {
+            "desc": "",
+            "name": "UISettings"
+        },
+        "translation": {
+            "desc": "",
+            "name": "t_UISettings"
+        },
+        "type": "group"
     }
   ],
   "ini": "Data\\SKSE\\Plugins\\MaxsuPoise.ini",
