@@ -50,9 +50,32 @@ source_group(
 	FILES ${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
 )
 
+if (EXISTS $ENV{CommonLibSSEPath})
+    add_subdirectory($ENV{CommonLibSSEPath} CommonLibSSE)
+else()
+    find_path(CommonLibSSEPath "include/REL/Relocation.h"
+                PATHS   "${CMAKE_SOURCE_DIR}/extern/CommonLibSSE"
+                        "${CMAKE_SOURCE_DIR}/extern/CommonLibSSE-NG" NO_DEFAULT_PATH)
+    if (EXISTS "${CommonLibSSEPath}")
+        add_subdirectory("${CommonLibSSEPath}" CommonLibSSE EXCLUDE_FROM_ALL)
+    else()
+        find_package(CommonLibSSE REQUIRED)
+    endif()
+endif()
+
+if (EXISTS $ENV{DKUtilPath})
+    add_subdirectory($ENV{DKUtilPath} DKUtil)
+else()
+    find_path(DKUtilPath "include/DKUtil/Logger.hpp"
+                PATHS   "${CMAKE_SOURCE_DIR}/extern/DKUtil" NO_DEFAULT_PATH)
+    if (EXISTS "${DKUtilPath}")
+        add_subdirectory("${DKUtilPath}" DKUtil EXCLUDE_FROM_ALL)
+    else()
+        find_package(DKUtil REQUIRED)
+    endif()
+endif()
+
 # dependencies
-add_subdirectory($ENV{CommonLibSSEPath} CommonLibSSE)
-add_subdirectory($ENV{DKUtilPath} DKUtil)
 find_package(spdlog CONFIG REQUIRED)
 
 # cmake target
