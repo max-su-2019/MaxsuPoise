@@ -4,11 +4,16 @@
     "description":  "",
     "license":  "MIT",
     "dependencies":  [
-                         "spdlog"
-                     ],
+        "spdlog",
+        "rsm-binary-io",
+        "nlohmann-json",
+        "rapidcsv",
+        "xbyak",
+        "simpleini"
+    ],
     "features":  {
-                     "mo2-install":  {
-                                         "description":  "MaxsuPoise"
-                                     }
-                 }
+        "mo2-install":  {
+            "description":  "MaxsuPoise"
+        }
+    }
 }
