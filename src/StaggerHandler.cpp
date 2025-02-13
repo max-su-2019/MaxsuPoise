@@ -165,7 +165,7 @@ namespace MaxsuPoise
 			if (!keyword)
 				continue;
 
-			if (a_target->HasKeyword(keyword) || HasActiveEffectWithKeyword(a_target, keyword)) {
+			if (a_target->HasKeyword(keyword) || HasActiveEffectWithKeyword(a_target->AsMagicTarget(), keyword)) {
 				if (pair.second > result)
 					result = pair.second;
 			}

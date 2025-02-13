@@ -15,7 +15,7 @@ namespace MaxsuPoise
 		auto sourceProjectile = a_hitData->sourceRef ? a_hitData->sourceRef.get().get()->AsProjectile() : nullptr;
 
 		float baseWeapDamage = sourceProjectile ? GetBaseRangePoiseDamage() : GetBaseMeleePoiseDamage();
-		float weapDamageMult = sourceProjectile ? GetWeaponDamageMult(sourceProjectile->weaponSource) : GetWeaponDamageMult(a_hitData->weapon);
+		float weapDamageMult = sourceProjectile ? GetWeaponDamageMult(sourceProjectile->GetProjectileRuntimeData().weaponSource) : GetWeaponDamageMult(a_hitData->weapon);
 		float animDamageMult = aggressor ? GetAnimationDamageMult(aggressor) : 0.f;
 		float attackDataMult = GetAttackDataDamageMult(a_hitData->attackData.get());
 		float ModTargetStagger = GetPerkModTargetStagger(aggressor, target);
