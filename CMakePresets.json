@@ -5,6 +5,44 @@
 		"minor": 21,
 		"patch": 0
 	},
+	"buildPresets": [
+		{
+			"name": "SE-release",
+			"displayName": "SE-release",
+			"configurePreset": "SE",
+			"configuration": "Release"
+		},
+		{
+			"name": "SE-debug",
+			"displayName": "SE-debug",
+			"configurePreset": "SE",
+			"configuration": "Debug"
+		},
+		{
+			"name": "ALL-release",
+			"displayName": "ALL-release",
+			"configurePreset": "ALL",
+			"configuration": "Release"
+		},
+		{
+			"name": "ALL-debug",
+			"displayName": "ALL-debug",
+			"configurePreset": "ALL",
+			"configuration": "Debug"
+		},
+		{
+			"name": "FLATRIM-release",
+			"displayName": "FLATRIM-release",
+			"configurePreset": "FLATRIM",
+			"configuration": "Release"
+		},
+		{
+			"name": "FLATRIM-debug",
+			"displayName": "FLATRIM-debug",
+			"configurePreset": "FLATRIM",
+			"configuration": "Debug"
+		}
+	],
 	"configurePresets": [
 		{
 			"name": "common",
