@@ -141,6 +141,7 @@ if (MSVC)
 			/Zc:wchar_t
 			/wd4200 # nonstandard extension used : zero-sized array in struct/union
 	)
+	target_link_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELEASE>:/DEBUG:FULL;/INCREMENTAL:NO;/OPT:REF,ICF>")
 endif()
 
 # PCH
