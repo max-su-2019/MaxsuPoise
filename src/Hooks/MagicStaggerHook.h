@@ -22,7 +22,7 @@ namespace MaxsuPoise
 
 			static void Install()
 			{
-				stl::write_thunk_call<ProcessStagger>(REL::ID(34188).address() + 0x6F);  // 1.5.97 140563460
+				stl::write_thunk_call<ProcessStagger>(REL::RelocationID(34188, 34982).address() + 0x6F);  // 1.5.97 140563460
 			}
 		};
 
