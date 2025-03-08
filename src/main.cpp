@@ -33,7 +33,7 @@ DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 	REL::Module::reset();
 	SKSE::Init(a_skse);
 
-	INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
+	INFO("{} v{} loaded", Plugin::NAME, Plugin::Version.string());
 
 	// do stuff
 	auto g_message = SKSE::GetMessagingInterface();

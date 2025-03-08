@@ -18,7 +18,7 @@ namespace MaxsuPoise
 
 	void PoiseRegenHandler::UpdatePoiseValue(RE::Actor* a_target, float a_delta)
 	{
-		if (!a_target || !a_target->currentProcess || !a_target->currentProcess->high || !a_target->Is3DLoaded() || !a_target->IsInitialized())
+		if (!a_target || !a_target->GetActorRuntimeData().currentProcess || !a_target->GetActorRuntimeData().currentProcess->high || !a_target->Is3DLoaded() || !a_target->IsInitialized())
 			return;
 
 		const auto totalPoiseHealth = PoiseHealthHandler::GetTotalPoiseHealth(a_target);
